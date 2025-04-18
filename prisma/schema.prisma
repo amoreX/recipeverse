@@ -4,6 +4,12 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+//Learning purposes only
+// id -> primary key 
+// default(auto()) -> generate automatic strins for objectid
+// db.OBjectId -> mongodb object ids need seperate formatting 
+// @map("_id") -> maps the prisma id to mongodb document _id
+
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -12,4 +18,78 @@ generator client {
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  email      String   @unique
+  password   String
+  avatar_url String?
+  bio        String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  //Relations
+
+  Recipe    Recipe[]
+  Favourite Favourite[]
+
+  @@map("Users")
+}
+
+model Recipe {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  user_id      String    @db.ObjectId
+  title        String
+  slug         String    @unique //creates a URL friendly version of the title
+  description  String
+  image_url    String?
+  cook_time    Int
+  prep_time    Int
+  servings     Int
+  difficulty   String
+  cuisine      String?
+  is_published Boolean   @default(false)
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  published_at DateTime?
+
+  //Embedded 
+  ingredients  Ingredient[]
+  instructions Instruction[]
+
+  tags String[]
+
+  user User @relation(fields: [user_id], references: [id])
+
+  Favourite Favourite[]
+
+  @@map("Recipes")
+}
+
+//Embedded Recipe Types
+type Ingredient {
+  description String
+  quantity    Float?
+  unit        String?
+  order_index Int
+}
+
+type Instruction {
+  step_number Int
+  description String
+}
+
+model Favourite {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id    String   @db.ObjectId
+  recipe_id  String   @db.ObjectId
+  created_at DateTime @default(now())
+
+  //Relations
+  user   User   @relation(fields: [user_id], references: [id]) //Relation between current document object to other dccument id
+  recipe Recipe @relation(fields: [recipe_id], references: [id])
+
+  @@unique([user_id, recipe_id])
+  @@map("Favourites")
 }
