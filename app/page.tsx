@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { useLoginForm } from "@/hooks/formValidation";
 import { Loader } from "lucide-react";
+import { prisma } from "@/lib/prisma"
+
 export default function SignInPage() {
   const{register,handleSubmit,formState:{errors}} =useLoginForm();
   const [loading,setLoading]=useState(false);
