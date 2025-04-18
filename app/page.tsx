@@ -46,7 +46,7 @@ export default function SignInPage() {
     handleLogin();
   };
   return (
-    <div className="min-h-screen bg-[#FFFCF8] flex justify-center ">
+    <div className="h-screen bg-[#FFFCF8] flex justify-center items-center max-h-screen">
       <div className="container flex min-h-screen flex-col items-center justify-center px-4 py-12 md:px-6">
         <div className="mx-auto w-full max-w-md">
           <div className="mb-8 flex items-center  justify-center">
