@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { PictureUpload } from "./PictureUpload";
 import Image from "next/image";
 import { ProfileTabContentProps } from "@/lib/types";
+import { useState } from "react";
+
 export function ProfileTabContent({
   user,
   isEditing,
@@ -14,18 +16,30 @@ export function ProfileTabContent({
   setBio,
   setAvatar,
 }: ProfileTabContentProps) {
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className="grid gap-8 md:grid-cols-[240px_1fr]">
       <div className="flex flex-col items-center gap-4 ">
         <div className="relative ">
           <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-white  bg-[#F8F5F0] shadow-md">
             {user?.avatar_url ? (
-              <Image
-                src={user.avatar_url || "/placeholder.svg"}
-                alt={"user_name"}
-                fill
-                className="object-cover"
-              />
+              <>
+                <div
+                  className={`absolute inset-0 flex items-center justify-center bg-[#F8F5F0] ${
+                    user.avatar_url ? "hidden" : "block"
+                  }`}
+                >
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-t-transparent border-[#6B8068]"></div>
+                </div>
+                <Image
+                  src={user.avatar_url || "/placeholder.svg"}
+                  alt={"user_name"}
+                  fill
+                  className="object-cover"
+                  onLoadingComplete={() => setLoading(false)}
+                />
+              </>
             ) : (
               <div className="flex h-full w-full items-center justify-center text-4xl font-semibold text-[#6B8068]">
                 {user?.name?.charAt(0)}
