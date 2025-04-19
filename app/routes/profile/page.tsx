@@ -13,8 +13,6 @@ export default function ProfilePage() {
   const { recipes, publishedRecipes, draftRecipes } = useRecipeStore();
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState<String | undefined>("");
-  const [bio, setBio] = useState<String>("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [view, setView] = useState<string>("all");
@@ -40,10 +38,6 @@ export default function ProfilePage() {
           setActiveTab={setActiveTab}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
-          name={name}
-          setName={setName}
-          bio={bio}
-          setBio={setBio}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           selectedTags={selectedTags}

@@ -57,10 +57,11 @@ export interface RecipesTabContentProps {
 export interface ProfileTabContentProps {
   user: User | null;
   isEditing: Boolean;
-  name: String | undefined;
+  name: String;
+  bio: String;
   setName: (value: string) => void;
-  bio: String | undefined;
   setBio: (value: string) => void;
+  setAvatar: (value: string) => void;
 }
 
 export interface ProfileTabsProps {
@@ -70,10 +71,6 @@ export interface ProfileTabsProps {
   setActiveTab: (value: string) => void;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  name: String | undefined;
-  setName: (value: string) => void;
-  bio: String | undefined;
-  setBio: (value: string) => void;
   searchQuery: string;
   setSearchQuery: (value: string) => void;
   selectedTags: string[];

@@ -2,16 +2,17 @@
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Camera } from "lucide-react";
 import Image from "next/image";
-import { User } from "@/lib/types";
 import { ProfileTabContentProps } from "@/lib/types";
 export function ProfileTabContent({
   user,
   isEditing,
   name,
-  setName,
   bio,
+  setName,
   setBio,
+  setAvatar,
 }: ProfileTabContentProps) {
   return (
     <div className="grid gap-8 md:grid-cols-[240px_1fr]">
@@ -60,6 +61,15 @@ export function ProfileTabContent({
                 placeholder="Tell us about yourself..."
                 className="min-h-[150px] resize-none border-[#E8E2D9] focus-visible:ring-[#6B8068]"
               />
+            </div>
+            <div className="flex justify-center mt-4">
+              <button
+                type="button"
+                className="flex items-center gap-2 rounded-lg border border-[#E8E2D9] bg-[#F8F5F0] px-4 py-2 text-sm font-medium text-[#6B8068] shadow-sm hover:bg-[#E8E2D9]"
+              >
+                <Camera />
+                Update Photo
+              </button>
             </div>
           </div>
         ) : (

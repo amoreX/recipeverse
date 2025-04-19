@@ -6,6 +6,8 @@ import { Pencil, Plus } from "lucide-react";
 import { ProfileTabContent } from "./ProfileTabContent";
 import { RecipesTabContent } from "./RecipesTabContent";
 import { ProfileTabsProps } from "@/lib/types";
+import { userStore } from "@/stores/userStore";
+import { useState } from "react";
 export function ProfileTabs({
   user,
   recipes,
@@ -13,10 +15,6 @@ export function ProfileTabs({
   setActiveTab,
   isEditing,
   setIsEditing,
-  name,
-  setName,
-  bio,
-  setBio,
   searchQuery,
   setSearchQuery,
   selectedTags,
@@ -24,6 +22,22 @@ export function ProfileTabs({
   view,
   setView,
 }: ProfileTabsProps) {
+  const { setUser } = userStore();
+  const [name, setName] = useState<String>("");
+  const [bio, setBio] = useState<String>("");
+  const [avatar, setAvatar] = useState<String>("");
+  const handleEditSave = () => {
+    if (user) {
+      setUser({
+        ...user,
+        name: name.trim() !== "" ? name : user.name,
+        bio: bio?.trim() !== "" ? bio : user.bio,
+      });
+    }
+    //logic to update it in backend as well
+    console.log("edit succesfful");
+    setIsEditing(false);
+  };
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -48,7 +62,9 @@ export function ProfileTabs({
                 </Button>
                 <Button
                   className="bg-[#6B8068] hover:bg-[#5A6B58]"
-                  onClick={() => setIsEditing(false)}
+                  onClick={() => {
+                    handleEditSave();
+                  }}
                 >
                   Save Changes
                 </Button>
@@ -64,7 +80,7 @@ export function ProfileTabs({
             )
           ) : (
             <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
-              <a href="/create-recipe">
+              <a href="/routes/create-recipe">
                 <Plus className="mr-2 h-4 w-4" />
                 Create New Recipe
               </a>
@@ -77,10 +93,11 @@ export function ProfileTabs({
         <ProfileTabContent
           user={user}
           isEditing={isEditing}
-          name={name}
           setName={setName}
+          name={name}
           bio={bio}
           setBio={setBio}
+          setAvatar={setAvatar}
         />
       </TabsContent>
 
