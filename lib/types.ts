@@ -1,9 +1,9 @@
 export type User = {
   id: String;
   email: String;
-  name?: String;
+  name?: string;
   avatar_url?: string;
-  bio?: String;
+  bio?: string;
 };
 
 export type Ingredient = {
@@ -57,8 +57,8 @@ export interface RecipesTabContentProps {
 export interface ProfileTabContentProps {
   user: User | null;
   isEditing: Boolean;
-  name: String;
-  bio: String;
+  name: string;
+  bio: string;
   setName: (value: string) => void;
   setBio: (value: string) => void;
   setAvatar: (value: string) => void;

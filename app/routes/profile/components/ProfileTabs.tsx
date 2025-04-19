@@ -7,6 +7,8 @@ import { ProfileTabContent } from "./ProfileTabContent";
 import { RecipesTabContent } from "./RecipesTabContent";
 import { ProfileTabsProps } from "@/lib/types";
 import { userStore } from "@/stores/userStore";
+import axios from "axios";
+import { toast } from "sonner";
 import { useState } from "react";
 export function ProfileTabs({
   user,
@@ -23,21 +25,56 @@ export function ProfileTabs({
   setView,
 }: ProfileTabsProps) {
   const { setUser } = userStore();
-  const [name, setName] = useState<String>("");
-  const [bio, setBio] = useState<String>("");
-  const [avatar, setAvatar] = useState<String>("");
-  const handleEditSave = () => {
-    if (user) {
-      setUser({
-        ...user,
-        name: name.trim() !== "" ? name : user.name,
-        bio: bio?.trim() !== "" ? bio : user.bio,
+  const [name, setName] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [avatar, setAvatar] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+
+  const handleEditSave = async () => {
+    if (!user) return;
+
+    const updatedUser = {
+      ...user,
+      name: name.trim() !== "" ? name : user.name,
+      bio: bio?.trim() !== "" ? bio : user.bio,
+      avatar_url: avatar?.trim() !== "" ? avatar : user.avatar_url,
+    };
+
+    setLoading(true);
+    try {
+      await handleBackendSave(updatedUser);
+      setUser(updatedUser);
+      setIsEditing(false);
+      toast("Profile Updated !", {
+        style: {
+          backgroundColor: "white",
+          color: "green",
+          textAlign: "center",
+        },
       });
+    } catch (err) {
+      toast("Profile Update Failed!", {
+        style: {
+          backgroundColor: "white",
+          color: "red",
+          textAlign: "center",
+        },
+      });
+      console.log("Backend profile update ERROR!");
+    } finally {
+      setLoading(false);
     }
-    //logic to update it in backend as well
-    console.log("edit succesfful");
-    setIsEditing(false);
   };
+
+  const handleBackendSave = async (updatedUser: NonNullable<typeof user>) => {
+    await axios.post("/api/updateUser", {
+      userId: updatedUser.id,
+      name: updatedUser.name || "",
+      bio: updatedUser.bio || "",
+      avatarurl: updatedUser.avatar_url || "",
+    });
+  };
+
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -62,11 +99,10 @@ export function ProfileTabs({
                 </Button>
                 <Button
                   className="bg-[#6B8068] hover:bg-[#5A6B58]"
-                  onClick={() => {
-                    handleEditSave();
-                  }}
+                  onClick={handleEditSave}
+                  disabled={loading}
                 >
-                  Save Changes
+                  {loading ? "Saving..." : "Save Changes"}
                 </Button>
               </div>
             ) : (

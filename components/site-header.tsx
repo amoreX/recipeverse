@@ -89,8 +89,9 @@ export function SiteHeader() {
                       <Avatar className="h-8 w-8">
                         <AvatarImage
                           src={user.avatar_url || "/placeholder.svg"}
+                          className="object-cover"
                         />
-                        <AvatarFallback>{user.email.charAt(0)}</AvatarFallback>
+                        <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
                       </Avatar>
                     </Link>
                   </Button>

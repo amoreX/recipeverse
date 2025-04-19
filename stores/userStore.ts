@@ -4,9 +4,9 @@ import { devtools } from "zustand/middleware";
 type User = {
   id: String;
   email: String;
-  name?: String;
+  name?: string;
   avatar_url?: string;
-  bio?: String;
+  bio?: string;
 };
 
 type UserState = {

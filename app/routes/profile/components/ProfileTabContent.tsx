@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera } from "lucide-react";
+import { PictureUpload } from "./PictureUpload";
 import Image from "next/image";
 import { ProfileTabContentProps } from "@/lib/types";
 export function ProfileTabContent({
@@ -45,7 +45,7 @@ export function ProfileTabContent({
               </label>
               <Input
                 id="name"
-                value={String(name)}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
               />
@@ -56,21 +56,13 @@ export function ProfileTabContent({
               </label>
               <Textarea
                 id="bio"
-                value={String(bio)}
+                value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Tell us about yourself..."
                 className="min-h-[150px] resize-none border-[#E8E2D9] focus-visible:ring-[#6B8068]"
               />
             </div>
-            <div className="flex justify-center mt-4">
-              <button
-                type="button"
-                className="flex items-center gap-2 rounded-lg border border-[#E8E2D9] bg-[#F8F5F0] px-4 py-2 text-sm font-medium text-[#6B8068] shadow-sm hover:bg-[#E8E2D9]"
-              >
-                <Camera />
-                Update Photo
-              </button>
-            </div>
+            <PictureUpload setAvatar={setAvatar} />
           </div>
         ) : (
           <>
