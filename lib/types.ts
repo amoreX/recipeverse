@@ -1,6 +1,7 @@
 export type User = {
   id: String;
   email: String;
+  name?: String;
   avatar_url?: string;
   bio?: String;
 };

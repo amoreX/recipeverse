@@ -21,23 +21,23 @@ import { TagChip } from "@/components/tag-chip";
 import { popularTags } from "@/lib/data";
 import { LayoutWithHeader } from "@/components/layout-with-header";
 import { userStore } from "@/stores/userStore";
+import { useRecipeStore } from "@/stores/recipeStore";
 export default function ProfilePage() {
   const { user } = userStore();
+  const { recipes, publishedRecipes, draftRecipes } = useRecipeStore();
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState<String>("");
+  const [name, setName] = useState<String | undefined>("");
   const [bio, setBio] = useState<String>("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [view, setView] = useState<"all" | "published" | "drafts">("all");
 
-  // Set active tab based on URL parameter
-
   // Redirect if not logged in
 
   // Initialize form values when user data is loaded
-  if (user && name === "" && bio === "") {
-    setName(user.email);
+  if (user && name && bio) {
+    setName(user.name);
     setBio(user.bio || "");
   }
 
@@ -55,38 +55,26 @@ export default function ProfilePage() {
     // Show success message
   };
 
-  // Simulate user's recipes (in a real app, this would come from a database or API)
-  //   const publishedRecipes = [filteredRecipes[0]];
-  //   const draftRecipes = [
-  //     {
-  //       ...featuredRecipes[1],
-  //       id: "draft1",
-  //       title: "Work in Progress Pasta Recipe",
-  //       description: "A draft recipe I'm still working on...",
-  //       isDraft: true,
-  //     },
-  //   ];
-
   // Filter recipes based on view, search query and selected tags
-  //   const allRecipes =
-  //     view === "all"
-  //       ? [...publishedRecipes, ...draftRecipes]
-  //       : view === "published"
-  //       ? publishedRecipes
-  //       : draftRecipes;
+  const allRecipes =
+    view === "all"
+      ? [...publishedRecipes, ...draftRecipes]
+      : view === "published"
+      ? publishedRecipes
+      : draftRecipes;
 
-  //   const filteredRecipes = allRecipes.filter((recipe) => {
-  //     const matchesSearch =
-  //       searchQuery === "" ||
-  //       recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       recipe.description.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredRecipes = allRecipes.filter((recipe) => {
+    const matchesSearch =
+      searchQuery === "" ||
+      recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      recipe.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-  //     const matchesTags =
-  //       selectedTags.length === 0 ||
-  //       selectedTags.some((tag) => recipe.tags.includes(tag));
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => recipe.tags.includes(tag));
 
-  //     return matchesSearch && matchesTags;
-  //   });
+    return matchesSearch && matchesTags;
+  });
 
   //   if (isLoading) {
   //     return (
@@ -400,7 +388,7 @@ export default function ProfilePage() {
                 ))}
               </div>
 
-              {/* {filteredRecipes.length > 0 ? (
+              {filteredRecipes.length > 0 ? (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredRecipes.map((recipe) => (
                     <div key={recipe.id} className="relative">
@@ -448,7 +436,7 @@ export default function ProfilePage() {
                     <Link href="/create-recipe">Create Your First Recipe</Link>
                   </Button>
                 </div>
-              )} */}
+              )}
             </div>
           </TabsContent>
         </Tabs>
