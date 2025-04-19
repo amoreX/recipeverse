@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useState, useEffect } from "react"; // Import useState and useEffect
 import { LogOut, Settings, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -15,16 +16,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { userStore } from "@/stores/userStore";
+
 export function SiteHeader() {
   const pathname = usePathname();
   const { user } = userStore();
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
   const isActive = (path: string) => {
     return pathname === path || pathname.startsWith(`${path}/`);
   };
 
+  useEffect(() => {
+    const body = document.body;
+    if (isMenuOpen) {
+      body.style.overflow = "hidden"; // Prevent scrolling when menu is open
+    } else {
+      body.style.overflow = ""; // Restore scrolling
+    }
+    return () => {
+      body.style.overflow = ""; // Cleanup on unmount
+    };
+  }, [isMenuOpen]);
+
   return (
     <header className="border-b border-[#E8E2D9] bg-white">
-      <div className=" flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
           <span className="font-serif text-xl font-semibold text-[#2D2A26]">
             RecipeVerse
@@ -32,12 +47,11 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden gap-6 md:flex">
           <Link
-            href="/"
+            href="/routes/explore"
             className={`text-sm font-medium ${
-              isActive("/") &&
-              !isActive("/favorites") &&
-              !isActive("/profile") &&
-              !isActive("/sign-in")
+              isActive("/routes/explore") &&
+              !isActive("/routes/favorites") &&
+              !isActive("/routes/sign-in")
                 ? "text-[#6B8068]"
                 : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
             }`}
@@ -45,27 +59,15 @@ export function SiteHeader() {
             Explore
           </Link>
           <Link
-            href="/favorites"
+            href="/routes/favorites"
             className={`text-sm font-medium ${
-              isActive("/favorites")
+              isActive("/routes/favorites")
                 ? "text-[#6B8068]"
                 : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
             }`}
           >
             Favorites
           </Link>
-          {user && (
-            <Link
-              href="/profile"
-              className={`text-sm font-medium ${
-                isActive("/profile")
-                  ? "text-[#6B8068]"
-                  : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
-              }`}
-            >
-              My Profile
-            </Link>
-          )}
         </nav>
         <div className="flex items-center gap-4">
           {user ? (
@@ -74,7 +76,7 @@ export function SiteHeader() {
                 className="hidden bg-[#6B8068] text-white hover:bg-[#5A6B58] md:flex"
                 asChild
               >
-                <Link href="/create-recipe">Create Recipe</Link>
+                <Link href="/routes/create-recipe">Create Recipe</Link>
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -83,7 +85,7 @@ export function SiteHeader() {
                     className="relative h-8 w-8 rounded-full"
                     asChild
                   >
-                    <Link href="/profile">
+                    <Link href="/routes/profile">
                       <Avatar className="h-8 w-8">
                         <AvatarImage
                           src={user.avatar_url || "/placeholder.svg"}
@@ -104,15 +106,9 @@ export function SiteHeader() {
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link href="/profile">
+                    <Link href="/routes/profile">
                       <User className="mr-2 h-4 w-4" />
                       <span>Profile</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/profile/settings">
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
@@ -135,14 +131,14 @@ export function SiteHeader() {
                 className="hidden bg-[#6B8068] text-white hover:bg-[#5A6B58] md:flex"
                 asChild
               >
-                <Link href="/create-recipe">Create Recipe</Link>
+                <Link href="/routes/create-recipe">Create Recipe</Link>
               </Button>
               <Button
                 variant="ghost"
                 className="relative h-8 w-8 rounded-full"
                 asChild
               >
-                <Link href="/sign-in">
+                <Link href="/">
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-[#F8F5F0] text-[#6B8068]">
                       <User className="h-4 w-4" />
@@ -153,7 +149,12 @@ export function SiteHeader() {
               </Button>
             </>
           )}
-          <Button size="icon" variant="ghost" className="md:hidden">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="md:hidden"
+            onClick={() => setIsMenuOpen((prev) => !prev)} // Toggle menu state
+          >
             <span className="sr-only">Toggle menu</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -173,6 +174,42 @@ export function SiteHeader() {
             </svg>
           </Button>
         </div>
+      </div>
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={() => setIsMenuOpen(false)} // Close menu when clicking outside
+        ></div>
+      )}
+      <div
+        className={`fixed top-0 right-0 z-50 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out md:hidden ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <nav className="flex flex-col gap-4 px-4 py-6">
+          <Link
+            href="/routes/explore"
+            className={`text-sm font-medium ${
+              isActive("/routes/explore") &&
+              !isActive("/routes/favorites") &&
+              !isActive("/routes/sign-in")
+                ? "text-[#6B8068]"
+                : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
+            }`}
+          >
+            Explore
+          </Link>
+          <Link
+            href="/routes/favorites"
+            className={`text-sm font-medium ${
+              isActive("/routes/favorites")
+                ? "text-[#6B8068]"
+                : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
+            }`}
+          >
+            Favorites
+          </Link>
+        </nav>
       </div>
     </header>
   );
