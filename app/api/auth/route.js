@@ -30,12 +30,13 @@ export const POST = async (req, res) => {
       }
     }
 
-    //logic to set context me id of user
-
-    return new Response(JSON.stringify({ message: "Login Succesfull" }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ userDetails: user, message: "Login Succesfull" }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (err) {
     console.log(err);
     return new Response(JSON.stringify({ message: "Login Failed" }), {

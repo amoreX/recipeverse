@@ -6,8 +6,11 @@ import { useState } from "react";
 import { useLoginForm } from "@/hooks/formValidation";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
+import { userStore } from "@/stores/userStore";
 import axios from "axios";
 export default function SignInPage() {
+  const { setUser } = userStore();
+
   const {
     register,
     handleSubmit,
@@ -23,6 +26,7 @@ export default function SignInPage() {
           email: data.email,
           password: data.password,
         });
+        setUser(res.data.userDetails);
         toast("Login Successful !", {
           style: {
             backgroundColor: "white",

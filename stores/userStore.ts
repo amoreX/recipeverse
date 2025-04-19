@@ -4,7 +4,7 @@ import { devtools } from "zustand/middleware";
 type User = {
   id: String;
   email: String;
-  avatar_url?: String;
+  avatar_url?: string;
   bio?: String;
 };
 
@@ -20,9 +20,12 @@ export const userStore = create<UserState>((set) => ({
   isAuthenticated: false,
 
   setUser: (user) =>
-    set({
-      user,
-      isAuthenticated: !!user,
+    set(() => {
+      console.log("User Added");
+      return {
+        user,
+        isAuthenticated: !!user,
+      };
     }),
   clearUser: () =>
     set({
