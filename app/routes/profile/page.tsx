@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Camera, Filter, Pencil, Plus, Search } from "lucide-react";
@@ -23,8 +22,6 @@ import { popularTags } from "@/lib/data";
 import { LayoutWithHeader } from "@/components/layout-with-header";
 import { userStore } from "@/stores/userStore";
 export default function ProfilePage() {
-  const searchParams = useSearchParams();
-  const tabParam = searchParams.get("tab");
   const { user } = userStore();
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditing, setIsEditing] = useState(false);
@@ -35,11 +32,6 @@ export default function ProfilePage() {
   const [view, setView] = useState<"all" | "published" | "drafts">("all");
 
   // Set active tab based on URL parameter
-  useEffect(() => {
-    if (tabParam === "recipes") {
-      setActiveTab("recipes");
-    }
-  }, [tabParam]);
 
   // Redirect if not logged in
 
