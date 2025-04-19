@@ -5,7 +5,7 @@ export const POST = async (req, res) => {
   const { email, password } = await req.json();
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: {
         email: email,
       },
@@ -13,13 +13,13 @@ export const POST = async (req, res) => {
 
     if (!user) {
       //Create new user if no user exists
-      const newUser = await prisma.user.create({
+      user = await prisma.user.create({
         data: {
           email: email,
           password: hashedPassword,
         },
       });
-      console.log(newUser);
+      // console.log(newUser);
     } else {
       const passwordValid = await bcrypt.compare(password, user.password); //check if password matches
       if (!passwordValid) {

@@ -7,10 +7,11 @@ import { useLoginForm } from "@/hooks/formValidation";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import { userStore } from "@/stores/userStore";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 export default function SignInPage() {
   const { setUser } = userStore();
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,6 +28,7 @@ export default function SignInPage() {
           password: data.password,
         });
         setUser(res.data.userDetails);
+        router.push("/routes/profile");
         toast("Login Successful !", {
           style: {
             backgroundColor: "white",
