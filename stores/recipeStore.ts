@@ -35,6 +35,8 @@ type Recipe = {
 
 type RecipeStore = {
   recipes: Recipe[];
+  draftRecipes: Recipe[];
+  publishedRecipes: Recipe[];
   selectedRecipe: Recipe | null;
   setRecipes: (recipes: Recipe[]) => void;
   selectRecipe: (recipe: Recipe | null) => void;
@@ -44,19 +46,43 @@ type RecipeStore = {
 
 export const useRecipeStore = create<RecipeStore>((set) => ({
   recipes: [],
+  draftRecipes: [],
+  publishedRecipes: [],
   selectedRecipe: null,
 
-  setRecipes: (recipes) => set({ recipes }),
+  setRecipes: (recipes) => {
+    const drafts = recipes.filter((recipe) => !recipe.is_published);
+    const published = recipes.filter((recipe) => recipe.is_published);
+    set({
+      recipes,
+      draftRecipes: drafts,
+      publishedRecipes: published,
+    });
+  },
 
   selectRecipe: (recipe) => set({ selectedRecipe: recipe }),
 
   addRecipe: (recipe) =>
-    set((state) => ({
-      recipes: [...state.recipes, recipe],
-    })),
+    set((state) => {
+      const updatedRecipes = [...state.recipes, recipe];
+      return {
+        recipes: updatedRecipes,
+        draftRecipes: recipe.is_published
+          ? state.draftRecipes
+          : [...state.draftRecipes, recipe],
+        publishedRecipes: recipe.is_published
+          ? [...state.publishedRecipes, recipe]
+          : state.publishedRecipes,
+      };
+    }),
 
   removeRecipe: (id) =>
-    set((state) => ({
-      recipes: state.recipes.filter((r) => r.id !== id),
-    })),
+    set((state) => {
+      const updatedRecipes = state.recipes.filter((r) => r.id !== id);
+      return {
+        recipes: updatedRecipes,
+        draftRecipes: state.draftRecipes.filter((r) => r.id !== id),
+        publishedRecipes: state.publishedRecipes.filter((r) => r.id !== id),
+      };
+    }),
 }));
