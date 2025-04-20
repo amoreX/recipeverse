@@ -78,7 +78,7 @@ export default function CreateRecipePage() {
           },
         });
         setTimeout(() => {
-          //   window.location.reload();
+          window.location.reload();
         }, 1000);
       }
     } catch (err) {

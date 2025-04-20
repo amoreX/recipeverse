@@ -6,17 +6,26 @@ import { useState } from "react";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { userStore } from "@/stores/userStore";
+import axios from "axios";
 interface SaveButtonProps {
   recipeId: string;
 }
 
 export function SaveButton({ recipeId }: SaveButtonProps) {
   const [saved, setSaved] = useState(false);
+  const { user } = userStore();
 
   const toggleSave = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
+    const handleSave = async () => {
+      let res = await axios.post("/api/addFavourite", {
+        userId: user?.id,
+        recipeId: recipeId,
+      });
+    };
+    handleSave();
     setSaved(!saved);
     toast(
       saved ? "Recipe removed from favorites" : "Recipe saved to favorites"
