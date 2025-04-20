@@ -9,7 +9,7 @@ export const POST = async (req) => {
         id: recipeId,
       },
     });
-    console.log(fav);
+    // console.log(fav);
     const user = await prisma.user.findUnique({
       where: {
         id: fav.user_id,

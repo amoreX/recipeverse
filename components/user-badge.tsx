@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { User } from "@/lib/types";
 
 interface UserBadgeProps {
-  user: User | null;
+  user?: User | null;
 }
 
 export function UserBadge({ user }: UserBadgeProps) {

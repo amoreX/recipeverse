@@ -18,7 +18,7 @@ export default function RecipeDetailPage() {
   const params = useParams();
   const recipeId_url = params.id;
   const { selectedRecipe, selectRecipe } = useRecipeStore();
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<User | null>(null);
   // const { user } = userStore();
   const recipe = selectedRecipe;
   useEffect(() => {
