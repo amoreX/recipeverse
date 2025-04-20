@@ -3,14 +3,15 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Clock } from "lucide-react";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { UserBadge } from "@/components/user-badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { TagChip } from "@/components/tag-chip";
 import { SaveButton } from "@/components/save-button";
 import { useRecipeStore } from "@/stores/recipeStore";
 import { Recipe } from "@/lib/types";
-
+import axios from "axios";
+import { User } from "@/lib/types";
 interface RecipeCardProps {
   recipe: Recipe;
 }
@@ -18,7 +19,19 @@ interface RecipeCardProps {
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const router = useRouter();
   const { selectRecipe } = useRecipeStore();
+  const [user, setUser] = useState<User | null>(null);
   const [imageLoading, setImageLoading] = useState(true);
+
+  const gettingUser = async () => {
+    console.log(recipe.user_id);
+    const res = await axios.post("/api/getRecipeUser", {
+      userId: recipe.user_id,
+    });
+    setUser(res.data.user);
+  };
+  useEffect(() => {
+    gettingUser();
+  }, [recipe]);
 
   const handleClick = () => {
     selectRecipe(recipe);
@@ -72,6 +85,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           {recipe.description}
         </p>
         <div className="flex items-center justify-between">
+          <UserBadge user={user} />
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <Clock className="h-3.5 w-3.5" />
             <span>{recipe.cook_time} mins</span>
