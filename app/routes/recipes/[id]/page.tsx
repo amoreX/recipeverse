@@ -59,7 +59,12 @@ export default function RecipeDetailPage() {
     <LayoutWithHeader>
       <section className="relative">
         <div
-          className={`absolute inset-0 bg-[url('${recipe.image_url}')] bg-cover bg-center`}
+          className="absolute inset-0 bg-cover bg-center "
+          style={{
+            backgroundImage: `url(${recipe.image_url})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30" />
         </div>
@@ -163,7 +168,6 @@ export default function RecipeDetailPage() {
                     })}
                 </ul>
               </div>
-
             </div>
           </div>
         </div>
