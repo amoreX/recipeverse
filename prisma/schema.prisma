@@ -39,21 +39,18 @@ model User {
 }
 
 model Recipe {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  user_id      String    @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id      String   @db.ObjectId
   title        String
-  slug         String    @unique //creates a URL friendly version of the title
   description  String
   image_url    String?
   cook_time    Int
-  prep_time    Int
   servings     Int
   difficulty   String
   cuisine      String?
-  is_published Boolean   @default(false)
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  published_at DateTime?
+  is_published Boolean  @default(false)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 
   //Embedded 
   ingredients  Ingredient[]

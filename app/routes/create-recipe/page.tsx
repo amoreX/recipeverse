@@ -15,7 +15,9 @@ import { AdditionalDetails } from "./components/AdditionalDetails";
 import { useRouter } from "next/navigation";
 import { userStore } from "@/stores/userStore";
 import { Ingredient } from "@/lib/types";
+import { toast } from "sonner";
 import { Instruction } from "@/lib/types";
+import axios from "axios";
 export default function CreateRecipePage() {
   const router = useRouter();
   const { user, isAuthenticated, hasHydrated } = userStore();
@@ -30,7 +32,7 @@ export default function CreateRecipePage() {
   const [servings, setServings] = useState<number>(4);
   const [diff, setDiff] = useState<string>();
   const [cuisine, setCuisine] = useState<string>();
-  const [recipeUrl, setRecipeUrl] = useState<string>();
+  const [recipeUrl, setRecipeUrl] = useState<string>("");
   useEffect(() => {
     if (hasHydrated && !isAuthenticated) {
       router.push("/");
@@ -38,13 +40,88 @@ export default function CreateRecipePage() {
   }, [router, hasHydrated, isAuthenticated]);
   if (!hasHydrated) return null;
 
-  const handleDraft = () => {
-    console.log("Wont lemme push");
-    console.log("Wont lemme push");
-    console.log("Wont lemme push");
+  const handleSave = async () => {
+    try {
+      const payload = {
+        userId: user?.id,
+        title: recipetitle,
+        description: desc,
+        image_url: recipeUrl,
+        cook_time: cookTime,
+        servings: servings,
+        difficulty: diff,
+        cuisine: cuisine,
+        is_published: true,
+        ingredients: ingredients.map((ing, index) => ({
+          ...ing,
+          order_index: index,
+        })),
+        instructions: instructions.map((step, index) => ({
+          ...step,
+          step_number: index + 1,
+        })),
+        tags: selectedTags,
+      };
+
+      const res = await axios.post("/api/addRecipe", payload);
+
+      if (res.status === 200) {
+        toast("Recipe Published!", {
+          style: {
+            color: "green",
+          },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    } catch (err) {
+      console.error("Error saving draft:", err);
+      alert("Failed to save draft");
+    }
   };
 
-  const handleSave = () => {};
+  const handleDraft = async () => {
+    try {
+      const payload = {
+        userId: user?.id,
+        title: recipetitle,
+        description: desc,
+        image_url: recipeUrl,
+        cook_time: cookTime,
+        servings: servings,
+        difficulty: diff,
+        cuisine: cuisine,
+        is_published: false,
+        ingredients: ingredients.map((ing, index) => ({
+          ...ing,
+          order_index: index,
+        })),
+        instructions: instructions.map((step, index) => ({
+          ...step,
+          step_number: index + 1,
+        })),
+        tags: selectedTags,
+      };
+
+      const res = await axios.post("/api/addRecipe", payload);
+
+      if (res.status === 200) {
+        toast("Recipe Drafted!", {
+          style: {
+            color: "green",
+          },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    } catch (err) {
+      console.error("Error publishing recipe:", err);
+      alert("Failed to publish recipe");
+    }
+  };
+
   return (
     <LayoutWithHeader>
       <div className=" px-4 py-8 md:px-6 md:py-12">
@@ -92,7 +169,7 @@ export default function CreateRecipePage() {
                 variant="outline"
                 className="flex-1 border-[#E8E2D9] hover:bg-[#F8F5F0]"
                 onClick={() => {
-                  handleSave();
+                  handleDraft();
                 }}
               >
                 Save Draft
@@ -100,7 +177,7 @@ export default function CreateRecipePage() {
               <Button
                 className="flex-1 bg-[#6B8068] hover:bg-[#5A6B58]"
                 onClick={() => {
-                  handleDraft();
+                  handleSave();
                 }}
               >
                 Publish Recipe
