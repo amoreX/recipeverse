@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-
+import { useRecipeStore } from "@/stores/recipeStore";
 import { Button } from "@/components/ui/button";
 import { LayoutWithHeader } from "@/components/layout-with-header";
 import { BasicInformation } from "./components/BasicInformation";
@@ -20,11 +20,10 @@ import { Instruction } from "@/lib/types";
 import axios from "axios";
 export default function CreateRecipePage() {
   const router = useRouter();
+  const { recipes, addRecipe, draftRecipes } = useRecipeStore();
   const { user, isAuthenticated, hasHydrated } = userStore();
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-
   const [instructions, setInstructions] = useState<Instruction[]>([]);
-
   const [selectedTags, setSelectedTags] = useState<string[]>(["Seasonal"]);
   const [recipetitle, setRecipetitle] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
@@ -38,6 +37,12 @@ export default function CreateRecipePage() {
       router.push("/");
     }
   }, [router, hasHydrated, isAuthenticated]);
+  useEffect(() => {
+    console.log("This is from zustand:");
+    console.log(recipes);
+    console.log("This is drafted:");
+    console.log(draftRecipes);
+  }, [recipes]);
   if (!hasHydrated) return null;
 
   const handleSave = async () => {
@@ -64,7 +69,8 @@ export default function CreateRecipePage() {
       };
 
       const res = await axios.post("/api/addRecipe", payload);
-
+      const rawRecipes = res.data.recipeDetails;
+      addRecipe(rawRecipes);
       if (res.status === 200) {
         toast("Recipe Published!", {
           style: {
@@ -72,12 +78,12 @@ export default function CreateRecipePage() {
           },
         });
         setTimeout(() => {
-          window.location.reload();
+          //   window.location.reload();
         }, 1000);
       }
     } catch (err) {
       console.error("Error saving draft:", err);
-      alert("Failed to save draft");
+      alert("Failed to publish");
     }
   };
 
@@ -105,7 +111,8 @@ export default function CreateRecipePage() {
       };
 
       const res = await axios.post("/api/addRecipe", payload);
-
+      const rawRecipes = res.data.recipeDetails;
+      addRecipe(rawRecipes);
       if (res.status === 200) {
         toast("Recipe Drafted!", {
           style: {
@@ -113,12 +120,12 @@ export default function CreateRecipePage() {
           },
         });
         setTimeout(() => {
-          window.location.reload();
+          //   window.location.reload();
         }, 1000);
       }
     } catch (err) {
       console.error("Error publishing recipe:", err);
-      alert("Failed to publish recipe");
+      alert("Failed to save draft");
     }
   };
 

@@ -11,6 +11,9 @@ export const POST = async (req, res) => {
     difficulty,
     cuisine,
     is_published,
+    ingredients,
+    instructions,
+    tags,
   } = await req.json();
 
   try {
@@ -25,6 +28,9 @@ export const POST = async (req, res) => {
         difficulty: difficulty,
         cuisine: cuisine,
         is_published: is_published,
+        ingredients: ingredients,
+        instructions: instructions,
+        tags: tags,
       },
     });
 
