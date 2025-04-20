@@ -33,19 +33,6 @@ export function Tags({ selectedTags, setSelectedTags }: TagsProps) {
               </button>
             ))}
           </div>
-          <div className="flex gap-2">
-            <Input
-              placeholder="Add custom tag..."
-              className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
-            />
-            <Button
-              variant="outline"
-              className="shrink-0 border-[#E8E2D9] hover:bg-[#F8F5F0]"
-            >
-              <Plus className="mr-1 h-4 w-4" />
-              Add
-            </Button>
-          </div>
         </div>
       </CardContent>
     </Card>

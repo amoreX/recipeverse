@@ -10,6 +10,7 @@ export type Ingredient = {
   description: string;
   quantity?: number;
   unit?: string;
+  order_index: number;
 };
 
 export type Instruction = {
@@ -77,4 +78,15 @@ export interface ProfileTabsProps {
   setSelectedTags: (value: string[] | ((prev: string[]) => string[])) => void;
   view: string;
   setView: (value: string) => void;
+}
+
+export interface BasicInformationProps {
+  desc: string;
+  setDesc: (value: string) => void;
+  recipetitle: string;
+  setRecipetitle: (value: string) => void;
+  cookTime: number;
+  setCookTime: (value: number) => void;
+  servings: number;
+  setServings: (value: number) => void;
 }

@@ -2,8 +2,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-
-export function BasicInformation() {
+import { BasicInformationProps } from "@/lib/types";
+export function BasicInformation({
+  desc,
+  setDesc,
+  recipetitle,
+  setRecipetitle,
+  cookTime,
+  setCookTime,
+  servings,
+  setServings,
+}: BasicInformationProps) {
   return (
     <Card className="border-[#E8E2D9]">
       <CardContent className="p-6">
@@ -15,6 +24,8 @@ export function BasicInformation() {
             <Label htmlFor="title">Recipe Title</Label>
             <Input
               id="title"
+              value={recipetitle}
+              onChange={(e) => setRecipetitle(e.target.value)}
               placeholder="e.g., Homemade Sourdough Bread"
               className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
             />
@@ -23,6 +34,8 @@ export function BasicInformation() {
             <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
               placeholder="Describe your recipe in a few sentences..."
               className="min-h-[100px] resize-y border-[#E8E2D9] focus-visible:ring-[#6B8068]"
             />
@@ -35,6 +48,7 @@ export function BasicInformation() {
                 type="number"
                 min="1"
                 placeholder="45"
+                onChange={(e) => setCookTime(Number(e.target.value))}
                 className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
               />
             </div>
@@ -45,6 +59,7 @@ export function BasicInformation() {
                 type="number"
                 min="1"
                 placeholder="4"
+                onChange={(e) => setServings(Number(e.target.value))}
                 className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
               />
             </div>

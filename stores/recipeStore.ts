@@ -1,10 +1,10 @@
-// stores/recipeStore.ts
 import { create } from "zustand";
 
 type Ingredient = {
   description: string;
   quantity?: number;
   unit?: string;
+  order_index: number;
 };
 
 type Instruction = {

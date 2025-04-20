@@ -8,7 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function AdditionalDetails() {
+interface AdditionalDetailsProps {
+  setDiff: (value: string) => void;
+  setCuisine: (value: string) => void;
+}
+export function AdditionalDetails({
+  setDiff,
+  setCuisine,
+}: AdditionalDetailsProps) {
   return (
     <Card className="border-[#E8E2D9]">
       <CardContent className="p-6">
@@ -18,7 +25,7 @@ export function AdditionalDetails() {
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="difficulty">Difficulty</Label>
-            <Select>
+            <Select onValueChange={setDiff}>
               <SelectTrigger className="border-[#E8E2D9] focus-visible:ring-[#6B8068]">
                 <SelectValue placeholder="Select difficulty" />
               </SelectTrigger>
@@ -31,7 +38,7 @@ export function AdditionalDetails() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="cuisine">Cuisine</Label>
-            <Select>
+            <Select onValueChange={setCuisine}>
               <SelectTrigger className="border-[#E8E2D9] focus-visible:ring-[#6B8068]">
                 <SelectValue placeholder="Select cuisine" />
               </SelectTrigger>
