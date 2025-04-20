@@ -6,7 +6,7 @@ import { PictureUpload } from "./PictureUpload";
 import Image from "next/image";
 import { ProfileTabContentProps } from "@/lib/types";
 import { useState } from "react";
-
+import { useRecipeStore } from "@/stores/recipeStore";
 export function ProfileTabContent({
   user,
   isEditing,
@@ -17,7 +17,7 @@ export function ProfileTabContent({
   setAvatar,
 }: ProfileTabContentProps) {
   const [loading, setLoading] = useState(true);
-
+  const { recipes } = useRecipeStore();
   return (
     <div className="grid gap-8 md:grid-cols-[240px_1fr]">
       <div className="flex flex-col items-center gap-4 ">
@@ -93,13 +93,13 @@ export function ProfileTabContent({
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-lg bg-[#F8F5F0] p-4 text-center">
                   <p className="font-serif text-2xl font-semibold text-[#6B8068]">
-                    2
+                    {recipes.length}
                   </p>
                   <p className="text-sm text-muted-foreground">Recipes</p>
                 </div>
                 <div className="rounded-lg bg-[#F8F5F0] p-4 text-center">
                   <p className="font-serif text-2xl font-semibold text-[#6B8068]">
-                    15
+                    yet to work
                   </p>
                   <p className="text-sm text-muted-foreground">Favorites</p>
                 </div>

@@ -6,11 +6,12 @@ import { userStore } from "@/stores/userStore";
 import { useRecipeStore } from "@/stores/recipeStore";
 import { ProfileTabs } from "./components/ProfileTabs";
 import { useRouter } from "next/navigation";
-
+import axios from "axios";
 export default function ProfilePage() {
   const router = useRouter();
   const { user, isAuthenticated, hasHydrated } = userStore();
-  const { recipes, publishedRecipes, draftRecipes } = useRecipeStore();
+  const { recipes, publishedRecipes, draftRecipes, setRecipes } =
+    useRecipeStore();
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,7 +23,28 @@ export default function ProfilePage() {
       router.push("/");
     }
   }, [router, hasHydrated, isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      const getRecipes = async () => {
+        const res = await axios.post("/api/getRecipes", {
+          userId: user?.id,
+        });
+        // console.log(res.data.recipeDetails);
+        const allRecipes = res.data.recipeDetails;
+        if (allRecipes) {
+          setRecipes(allRecipes);
+        }
+      };
+      getRecipes();
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    console.log("This is from zustand profile page:");
+    console.log(recipes);
+  }, [recipes]);
   if (!hasHydrated) return null; // avoid rendering during redirect
+
   return (
     <LayoutWithHeader>
       <div className="px-4 py-8 md:px-6 md:py-12">

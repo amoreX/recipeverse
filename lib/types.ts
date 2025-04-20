@@ -21,18 +21,15 @@ export type Instruction = {
 export type Recipe = {
   id: string;
   title: string;
-  slug: string;
   description: string;
   image_url?: string;
   cook_time: number;
-  prep_time: number;
   servings: number;
   difficulty: string;
   cuisine?: string;
   is_published: boolean;
   created_at: string;
   updated_at: string;
-  published_at?: string;
   ingredients: Ingredient[];
   instructions: Instruction[];
   tags: string[];

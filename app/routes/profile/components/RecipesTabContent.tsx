@@ -146,7 +146,7 @@ export function RecipesTabContent({
               : "You don't have any draft recipes yet."}
           </p>
           <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
-            <a href="/create-recipe">Create Your First Recipe</a>
+            <a href="/routes/create-recipe">Create Your First Recipe</a>
           </Button>
         </div>
       )}
