@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Clock, Share2, User } from "lucide-react";
-
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TagChip } from "@/components/tag-chip";
@@ -11,10 +11,33 @@ import { UserBadge } from "@/components/user-badge";
 import { SaveButton } from "@/components/save-button";
 import { LayoutWithHeader } from "@/components/layout-with-header";
 import { useRecipeStore } from "@/stores/recipeStore";
-
+import { toast } from "sonner";
+import { userStore } from "@/stores/userStore";
+import axios from "axios";
 export default function RecipeDetailPage() {
-  const { selectedRecipe } = useRecipeStore();
+  const params = useParams();
+  const recipeId_url = params.id;
+  const { selectedRecipe, selectRecipe } = useRecipeStore();
+  const { user } = userStore();
   const recipe = selectedRecipe;
+  useEffect(() => {
+    if (!recipe) {
+      // console.log(recipeId_url);
+      try {
+        const getSpecificRecipe = async () => {
+          const res = await axios.post("/api/getRecipe", {
+            recipeId: recipeId_url,
+          });
+          // console.log(res.data.recipeDetails);
+          selectRecipe(res.data.recipeDetails);
+        };
+        getSpecificRecipe();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, []);
+
   const [checkedIngredients, setCheckedIngredients] = useState<string[]>([]);
 
   const getIngredientDisplay = (ingredient: {
@@ -33,6 +56,19 @@ export default function RecipeDetailPage() {
         ? prev.filter((i) => i !== ingredientDisplay)
         : [...prev, ingredientDisplay]
     );
+  };
+
+  const handleShare = () => {
+    const url = window.location.href;
+    console.log("clicked");
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast("Link Copied!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy URL: ", err);
+      });
   };
 
   if (!recipe) {
@@ -128,7 +164,7 @@ export default function RecipeDetailPage() {
           <div className="order-1 md:order-2">
             <div className="sticky top-4 rounded-2xl border border-[#E8E2D9] bg-white p-6">
               <div className="mb-6 flex items-center justify-between">
-                {/* <UserBadge user={recipe.author} /> */}
+                <UserBadge user={user} />
               </div>
 
               <div className="mb-6">
@@ -136,7 +172,20 @@ export default function RecipeDetailPage() {
                   <h3 className="font-serif text-lg font-semibold text-[#2D2A26]">
                     Ingredients
                   </h3>
-                  <SaveButton recipeId={recipe.id} />
+                  <div className="flex gap-2">
+                    <SaveButton recipeId={recipe.id} />
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="h-9 w-9 rounded-full"
+                      onClick={() => {
+                        handleShare();
+                      }}
+                    >
+                      <Share2 className="h-4 w-4" />
+                      <span className="sr-only">Share</span>
+                    </Button>
+                  </div>
                 </div>
                 <ul className="space-y-3">
                   {recipe.ingredients
