@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Clock } from "lucide-react";
+import { Clock, Trash } from "lucide-react";
 import { useState, useEffect } from "react";
 import { UserBadge } from "@/components/user-badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,12 +18,12 @@ interface RecipeCardProps {
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const router = useRouter();
-  const { selectRecipe } = useRecipeStore();
+  const { selectRecipe, removeRecipe } = useRecipeStore();
   const [user, setUser] = useState<User | null>(null);
   const [imageLoading, setImageLoading] = useState(true);
 
   const gettingUser = async () => {
-    console.log(recipe.user_id);
+    // console.log(recipe.user_id);
     const res = await axios.post("/api/getRecipeUser", {
       userId: recipe.user_id,
     });
@@ -32,6 +32,19 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   useEffect(() => {
     gettingUser();
   }, [recipe]);
+
+  const handleDelete = async () => {
+    try {
+      await axios.post(`/api/deleteRecipe`, {
+        recipeId: recipe.id,
+      });
+      removeRecipe(recipe.id);
+      // alert("Recipe deleted successfully");
+    } catch (error) {
+      console.error("Failed to delete recipe:", error);
+      // alert("Failed to delete recipe");
+    }
+  };
 
   const handleClick = () => {
     selectRecipe(recipe);
@@ -62,7 +75,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           }`}
           onLoadingComplete={() => setImageLoading(false)}
         />
-        <div className="absolute right-3 top-3 z-20">
+        <div className="absolute right-3 top-3 z-20 flex gap-2">
           <SaveButton recipeId={recipe.id} />
         </div>
       </div>
@@ -90,6 +103,15 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             <Clock className="h-3.5 w-3.5" />
             <span>{recipe.cook_time} mins</span>
           </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent triggering card click
+              handleDelete();
+            }}
+            className="p-1 text-red-500 hover:text-red-700"
+          >
+            <Trash className="h-5 w-5" />
+          </button>
         </div>
       </CardContent>
     </Card>
