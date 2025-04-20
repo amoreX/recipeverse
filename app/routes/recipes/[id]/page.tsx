@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Clock, Share2, User } from "lucide-react";
+import { Clock, Share2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,13 +12,14 @@ import { SaveButton } from "@/components/save-button";
 import { LayoutWithHeader } from "@/components/layout-with-header";
 import { useRecipeStore } from "@/stores/recipeStore";
 import { toast } from "sonner";
-import { userStore } from "@/stores/userStore";
+import { User } from "@/lib/types";
 import axios from "axios";
 export default function RecipeDetailPage() {
   const params = useParams();
   const recipeId_url = params.id;
   const { selectedRecipe, selectRecipe } = useRecipeStore();
-  const { user } = userStore();
+  const [user, setUser] = useState<User | null>();
+  // const { user } = userStore();
   const recipe = selectedRecipe;
   useEffect(() => {
     if (!recipe) {
@@ -37,6 +38,18 @@ export default function RecipeDetailPage() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const handleUser = async () => {
+      const res = await axios.post("/api/getUser", {
+        recipeId: recipe?.id,
+      });
+      setUser(res.data.user);
+    };
+    if (recipe) {
+      handleUser();
+    }
+  }, [selectedRecipe]);
 
   const [checkedIngredients, setCheckedIngredients] = useState<string[]>([]);
 
@@ -119,7 +132,7 @@ export default function RecipeDetailPage() {
               <span className="text-sm">{recipe.cook_time} mins</span>
             </div>
             <div className="flex items-center gap-1">
-              <User className="h-4 w-4" />
+              {/* <User className="h-4 w-4" /> */}
               <span className="text-sm">{recipe.servings} servings</span>
             </div>
           </div>
