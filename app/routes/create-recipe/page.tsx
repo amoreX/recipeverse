@@ -38,7 +38,11 @@ export default function CreateRecipePage() {
   }, [router, hasHydrated, isAuthenticated]);
   if (!hasHydrated) return null;
 
-  const handleDraft = () => {};
+  const handleDraft = () => {
+    console.log("Wont lemme push");
+    console.log("Wont lemme push");
+    console.log("Wont lemme push");
+  };
 
   const handleSave = () => {};
   return (
@@ -77,9 +81,7 @@ export default function CreateRecipePage() {
             />
           </div>
           <div className="space-y-8">
-            <RecipeImage 
-            setRecipeUrl={setRecipeUrl}
-            />
+            <RecipeImage setRecipeUrl={setRecipeUrl} />
             <Tags
               selectedTags={selectedTags}
               setSelectedTags={setSelectedTags}

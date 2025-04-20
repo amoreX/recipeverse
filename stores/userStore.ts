@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 type User = {
-  id: string;
-  email: string;
+  id: String;
+  email: String;
   name?: string;
   avatar_url?: string;
   bio?: string;
