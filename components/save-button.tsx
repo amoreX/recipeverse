@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useEffect } from "react";
 import { userStore } from "@/stores/userStore";
 import axios from "axios";
 interface SaveButtonProps {
@@ -15,6 +16,27 @@ interface SaveButtonProps {
 export function SaveButton({ recipeId }: SaveButtonProps) {
   const [saved, setSaved] = useState(false);
   const { user } = userStore();
+  useEffect(() => {
+    const fetchFavourites = async () => {
+      if (!user?.id) return;
+
+      try {
+        const res = await axios.post("/api/getFavourites", {
+          userId: user.id,
+        });
+
+        const isAlreadySaved = res.data.favs?.some(
+          (recipe: { id: string }) => recipe.id === recipeId
+        );
+
+        setSaved(isAlreadySaved);
+      } catch (error) {
+        console.error("Error fetching favorites:", error);
+      }
+    };
+
+    fetchFavourites();
+  }, [user?.id, recipeId]);
 
   const toggleSave = (e: React.MouseEvent) => {
     e.preventDefault();
