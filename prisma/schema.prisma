@@ -62,6 +62,7 @@ model Recipe {
 
   Favourite Favourite[]
 
+  @@unique([user_id, title, is_published])
   @@map("Recipes")
 }
 
