@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, isAuthenticated } = userStore();
+  const { user, isAuthenticated, hasHydrated } = userStore();
   const { recipes, publishedRecipes, draftRecipes } = useRecipeStore();
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditing, setIsEditing] = useState(false);
@@ -18,12 +18,11 @@ export default function ProfilePage() {
   const [view, setView] = useState<string>("all");
   console.log(user);
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (hasHydrated && !isAuthenticated) {
       router.push("/");
     }
-  }, [isAuthenticated, router]);
-
-  if (!isAuthenticated) return null; // avoid rendering during redirect
+  }, [router, hasHydrated, isAuthenticated]);
+  if (!hasHydrated) return null; // avoid rendering during redirect
   return (
     <LayoutWithHeader>
       <div className="px-4 py-8 md:px-6 md:py-12">
