@@ -77,8 +77,8 @@ export function ProfileTabs({
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <TabsList className="h-auto p-1">
+      <div className="flex  items-center sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
+        <TabsList className="h-auto p-1 flex-grow sm:flex-grow-0">
           <TabsTrigger value="profile" className="rounded-lg px-4 py-2">
             Profile
           </TabsTrigger>
@@ -86,13 +86,13 @@ export function ProfileTabs({
             My Recipes
           </TabsTrigger>
         </TabsList>
-        <div>
+        <div className="flex justify-end sm:justify-start">
           {activeTab === "profile" ? (
             isEditing ? (
               <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  className="border-[#E8E2D9] hover:bg-[#F8F5F0]"
+                  className="border-[#E8E2D9]  hover:bg-[#F8F5F0]"
                   onClick={() => setIsEditing(false)}
                 >
                   Cancel
@@ -108,7 +108,7 @@ export function ProfileTabs({
             ) : (
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-[#6B8068] hover:bg-[#5A6B58]"
+                className="bg-[#6B8068]  hover:bg-[#5A6B58]"
               >
                 <Pencil className="mr-2 h-4 w-4" />
                 Edit Profile
@@ -118,7 +118,7 @@ export function ProfileTabs({
             <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
               <a href="/routes/create-recipe">
                 <Plus className="mr-2 h-4 w-4" />
-                Create New Recipe
+                New Recipe
               </a>
             </Button>
           )}

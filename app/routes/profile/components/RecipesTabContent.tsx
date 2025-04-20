@@ -15,6 +15,7 @@ import { Search, Plus } from "lucide-react";
 import { popularTags } from "@/lib/data";
 import { NoRecipeSvg } from "@/components/noRecipeSvg";
 import { RecipesTabContentProps } from "@/lib/types";
+
 export function RecipesTabContent({
   recipes,
   searchQuery,
@@ -92,20 +93,6 @@ export function RecipesTabContent({
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full border-[#E8E2D9] pl-10 focus-visible:ring-[#6B8068]"
           />
-        </div>
-        <div className="flex gap-2">
-          <Select>
-            <SelectTrigger className="w-[180px] border-[#E8E2D9] focus-visible:ring-[#6B8068]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="newest">Newest First</SelectItem>
-              <SelectItem value="oldest">Oldest First</SelectItem>
-              <SelectItem value="a-z">A-Z</SelectItem>
-              <SelectItem value="z-a">Z-A</SelectItem>
-              <SelectItem value="cook-time">Cook Time</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
       </div>
 
