@@ -58,7 +58,9 @@ export default function RecipeDetailPage() {
   return (
     <LayoutWithHeader>
       <section className="relative">
-        <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1600')] bg-cover bg-center">
+        <div
+          className={`absolute inset-0 bg-[url('${recipe.image_url}')] bg-cover bg-center`}
+        >
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30" />
         </div>
         <div className=" relative flex min-h-[300px] flex-col items-center justify-center gap-4 px-4 py-16 text-center md:px-6 md:py-24">
