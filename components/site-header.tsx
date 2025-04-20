@@ -59,7 +59,7 @@ export function SiteHeader() {
             Explore
           </Link>
           <Link
-            href="/routes/favorites"
+            href="/routes/favourites"
             className={`text-sm font-medium ${
               isActive("/routes/favorites")
                 ? "text-[#6B8068]"

@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { PictureUpload } from "./PictureUpload";
 import Image from "next/image";
 import { ProfileTabContentProps } from "@/lib/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useRecipeStore } from "@/stores/recipeStore";
 export function ProfileTabContent({
   user,
@@ -17,6 +18,20 @@ export function ProfileTabContent({
   setAvatar,
 }: ProfileTabContentProps) {
   const [loading, setLoading] = useState(true);
+  const [numfav, setNumfav] = useState<number>(0);
+  useEffect(() => {
+    const handleNumfav = async () => {
+      try {
+        const res = await axios.post("/api/countFav", {
+          userId: user?.id,
+        });
+        setNumfav(res.data.numfav);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    handleNumfav();
+  }, [user]);
   const { recipes } = useRecipeStore();
   return (
     <div className="grid gap-8 md:grid-cols-[240px_1fr]">
@@ -99,7 +114,7 @@ export function ProfileTabContent({
                 </div>
                 <div className="rounded-lg bg-[#F8F5F0] p-4 text-center">
                   <p className="font-serif text-2xl font-semibold text-[#6B8068]">
-                    yet to work
+                    {numfav == 0 ? "No Favourites yet" : numfav}
                   </p>
                   <p className="text-sm text-muted-foreground">Favorites</p>
                 </div>
