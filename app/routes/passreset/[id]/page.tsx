@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+
 export default function GenerateTokenPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,9 @@ export default function GenerateTokenPage() {
           router.push("/");
         }, 2000);
       } else {
-        toast.error(res.data?.message || "Something went wrong!");
+        toast.error(
+          res.data?.message || "Something went wrong! Try again later"
+        );
       }
     } catch (err: any) {
       if (err.response) {
@@ -79,7 +82,7 @@ export default function GenerateTokenPage() {
             className="w-full bg-[#6B8068] hover:bg-[#5A6B58]"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Submit"}
+            {loading ? "Resetting..." : "Reset"}
           </Button>
         </form>
       </div>
