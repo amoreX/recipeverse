@@ -97,6 +97,14 @@ export default function SignInPage() {
                     <p className="text-red-500">{errors.password.message}</p>
                   )}
                 </div>
+                <div className="text-right">
+                  <a
+                    href="/routes/passreset/gentoken"
+                    className="text-sm text-[#6B8068] hover:underline"
+                  >
+                    Forgot Password?
+                  </a>
+                </div>
 
                 {loading == false ? (
                   <Button
