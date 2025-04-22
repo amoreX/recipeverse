@@ -61,7 +61,7 @@ export function SiteHeader() {
           <Link
             href="/routes/favourites"
             className={`text-sm font-medium ${
-              isActive("/routes/favorites")
+              isActive("/routes/favourites")
                 ? "text-[#6B8068]"
                 : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
             }`}

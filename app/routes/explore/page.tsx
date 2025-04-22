@@ -1,11 +1,37 @@
+"use client";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { RecipeCard } from "@/components/recipe-card";
 import { TagChip } from "@/components/tag-chip";
 import { popularTags } from "@/lib/data";
 import { LayoutWithHeader } from "@/components/layout-with-header";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { userStore } from "@/stores/userStore";
+import { Recipe } from "@/lib/types";
+import { useRouter } from "next/navigation";
 export default function Explore() {
+  const router = useRouter();
+  const [recipes, setRecipes] = useState<Recipe[]>();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  useEffect(() => {
+    const gettingAllRecipe = async () => {
+      const res = await axios.get("/api/getAllRecipes");
+      console.log(res.data.allRecipes);
+      setRecipes(res.data.allRecipes);
+    };
+    gettingAllRecipe();
+  }, [router]);
+  const toggleTag = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+  const filteredRecipes = selectedTags.length
+    ? recipes?.filter((recipe) =>
+        recipe.tags.some((tag) => selectedTags.includes(tag))
+      )
+    : recipes;
   return (
     <LayoutWithHeader>
       <section className="relative">
@@ -39,18 +65,25 @@ export default function Explore() {
           </h2>
           <div className="flex flex-wrap gap-2">
             {popularTags.map((tag) => (
-              <TagChip key={tag} tag={tag} active={tag === "Seasonal"} />
+              <TagChip
+                key={tag}
+                tag={tag}
+                active={selectedTags.includes(tag)}
+                onClick={() => toggleTag(tag)}
+              />
             ))}
           </div>
         </div>
+
         <div className="mb-12">
           <h2 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-[#2D2A26]">
             Featured Recipes
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {/* {featuredRecipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))} */}
+            {filteredRecipes &&
+              filteredRecipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
           </div>
         </div>
       </section>
