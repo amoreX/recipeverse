@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { UserBadge } from "@/components/user-badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { TagChip } from "@/components/tag-chip";
+import { Button } from "./ui/button";
 import { SaveButton } from "@/components/save-button";
 import { userStore } from "@/stores/userStore";
 import { useRecipeStore } from "@/stores/recipeStore";
@@ -16,9 +17,10 @@ import { toast } from "sonner";
 import { User } from "@/lib/types";
 interface RecipeCardProps {
   recipe: Recipe;
+  isDraft?: boolean;
 }
 
-export function RecipeCard({ recipe }: RecipeCardProps) {
+export function RecipeCard({ recipe, isDraft }: RecipeCardProps) {
   const router = useRouter();
   const { user } = userStore();
   const { selectRecipe, removeRecipe } = useRecipeStore();
@@ -26,7 +28,6 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   const [imageLoading, setImageLoading] = useState(true);
 
   const gettingUser = async () => {
-    // console.log(recipe.user_id);
     const res = await axios.post("/api/getRecipeUser", {
       userId: recipe.user_id,
     });
@@ -55,7 +56,19 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
       console.log("Failed to delete recipe:", error);
     }
   };
-
+  const handlePublish = async () => {
+    try {
+      let res = await axios.post("/api/publishRecipe", {
+        recipeId: recipe.id,
+      });
+      toast("Recipe Published!", { style: { color: "green" } });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (Err) {
+      toast("Failed to Publish", { style: { color: "red" } });
+    }
+  };
   const handleClick = () => {
     selectRecipe(recipe);
     router.push(`/routes/recipes/${recipe.id}`);
@@ -90,7 +103,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         </div>
       </div>
 
-      <CardContent className="px-5 pb-5">
+      <CardContent className="px-5 pb-5 ">
         <div className="mb-2 flex flex-wrap gap-1">
           {recipe.tags.slice(0, 2).map((tag) => (
             <TagChip key={tag} tag={tag} small />
@@ -104,7 +117,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         <h3 className="mb-2 font-serif text-lg font-semibold tracking-tight text-[#2D2A26] group-hover:text-[#6B8068]">
           {recipe.title}
         </h3>
-        <p className="mb-4 line-clamp-2 text-sm text-[#2D2A26]/70">
+        <p className="mb-4 line-clamp-2 text-sm text-[#2D2A26]/70 min-h-[2.5rem]">
           {recipe.description}
         </p>
         <div className="flex items-center justify-between">
@@ -123,6 +136,21 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             <Trash className="h-5 w-5" />
           </button>
         </div>
+        {isDraft ? (
+          <div className="mt-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full border-[#6B8068] bg-[#6B8068] cursor-pointer text-white hover:bg-[#5b6d57] hover:text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePublish();
+              }}
+            >
+              Publish
+            </Button>
+          </div>
+        ) : null}
       </CardContent>
     </Card>
   );
