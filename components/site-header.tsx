@@ -40,7 +40,7 @@ export function SiteHeader() {
   return (
     <header className="border-b border-[#E8E2D9] bg-white">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/routes/explore" className="flex items-center gap-2">
           <span className="font-serif text-xl font-semibold text-[#2D2A26]">
             RecipeVerse
           </span>

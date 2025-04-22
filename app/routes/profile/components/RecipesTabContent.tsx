@@ -8,6 +8,7 @@ import { Search, Plus } from "lucide-react";
 import { popularTags } from "@/lib/data";
 import { NoRecipeSvg } from "@/components/noRecipeSvg";
 import { RecipesTabContentProps } from "@/lib/types";
+import { motion } from "framer-motion";
 
 export function RecipesTabContent({
   recipes,
@@ -39,8 +40,18 @@ export function RecipesTabContent({
   });
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-wrap gap-2">
+    <motion.div
+      className="space-y-8"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      <motion.div
+        className="flex flex-wrap gap-2"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+      >
         <Button
           variant={view === "all" ? "default" : "outline"}
           onClick={() => setView("all")}
@@ -74,9 +85,14 @@ export function RecipesTabContent({
         >
           Drafts
         </Button>
-      </div>
+      </motion.div>
 
-      <div className="grid gap-4 md:grid-cols-[1fr_auto]">
+      <motion.div
+        className="grid gap-4 md:grid-cols-[1fr_auto]"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+      >
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -87,11 +103,22 @@ export function RecipesTabContent({
             className="w-full border-[#E8E2D9] pl-10 focus-visible:ring-[#6B8068]"
           />
         </div>
-      </div>
+      </motion.div>
 
-      <div className="flex flex-wrap gap-2">
+      <motion.div
+        className="flex flex-wrap gap-2"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.05,
+            },
+          },
+        }}
+      >
         {popularTags.map((tag) => (
-          <button
+          <motion.button
             key={tag}
             onClick={() =>
               setSelectedTags((prev: string[]) =>
@@ -100,24 +127,48 @@ export function RecipesTabContent({
                   : [...prev, tag]
               )
             }
+            variants={{
+              hidden: { opacity: 0, y: 8 },
+              visible: { opacity: 1, y: 0 },
+            }}
           >
             <TagChip tag={tag} active={selectedTags.includes(tag)} />
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
       {filteredRecipes.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.05,
+              },
+            },
+          }}
+        >
           {filteredRecipes.map((recipe) => (
-            <RecipeCard
+            <motion.div
               key={recipe.id}
-              recipe={recipe}
-              isDraft={view === "drafts"}
-            />
+              variants={{
+                hidden: { opacity: 0, y: 12 },
+                visible: { opacity: 1, y: 0 },
+              }}
+            >
+              <RecipeCard recipe={recipe} isDraft={view === "drafts"} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ) : (
-        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-[#E8E2D9] bg-white p-8 text-center">
+        <motion.div
+          className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-[#E8E2D9] bg-white p-8 text-center"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
           <NoRecipeSvg />
           <h3 className="mb-2 font-serif text-lg font-semibold text-[#2D2A26]">
             No recipes yet
@@ -132,8 +183,8 @@ export function RecipesTabContent({
           <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
             <a href="/routes/create-recipe">Create Your First Recipe</a>
           </Button>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }

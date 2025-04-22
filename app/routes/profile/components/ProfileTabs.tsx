@@ -10,6 +10,8 @@ import { userStore } from "@/stores/userStore";
 import axios from "axios";
 import { toast } from "sonner";
 import { useState } from "react";
+import { motion } from "framer-motion";
+
 export function ProfileTabs({
   user,
   recipes,
@@ -77,7 +79,7 @@ export function ProfileTabs({
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-      <div className="flex  items-center sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
+      <div className="flex items-center sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
         <TabsList className="h-auto p-1 flex-grow sm:flex-grow-0">
           <TabsTrigger value="profile" className="rounded-lg px-4 py-2">
             Profile
@@ -126,27 +128,41 @@ export function ProfileTabs({
       </div>
 
       <TabsContent value="profile">
-        <ProfileTabContent
-          user={user}
-          isEditing={isEditing}
-          setName={setName}
-          name={name}
-          bio={bio}
-          setBio={setBio}
-          setAvatar={setAvatar}
-        />
+        <motion.div
+          key="profile-tab"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ProfileTabContent
+            user={user}
+            isEditing={isEditing}
+            setName={setName}
+            name={name}
+            bio={bio}
+            setBio={setBio}
+            setAvatar={setAvatar}
+          />
+        </motion.div>
       </TabsContent>
 
       <TabsContent value="recipes">
-        <RecipesTabContent
-          recipes={recipes}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
-          view={view}
-          setView={setView}
-        />
+        <motion.div
+          key="recipes-tab"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <RecipesTabContent
+            recipes={recipes}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
+            view={view}
+            setView={setView}
+          />
+        </motion.div>
       </TabsContent>
     </Tabs>
   );
