@@ -8,9 +8,11 @@ import { UserBadge } from "@/components/user-badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { TagChip } from "@/components/tag-chip";
 import { SaveButton } from "@/components/save-button";
+import { userStore } from "@/stores/userStore";
 import { useRecipeStore } from "@/stores/recipeStore";
 import { Recipe } from "@/lib/types";
 import axios from "axios";
+import { toast } from "sonner";
 import { User } from "@/lib/types";
 interface RecipeCardProps {
   recipe: Recipe;
@@ -18,8 +20,9 @@ interface RecipeCardProps {
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const router = useRouter();
+  const { user } = userStore();
   const { selectRecipe, removeRecipe } = useRecipeStore();
-  const [user, setUser] = useState<User | null>(null);
+  const [tempuser, setTempUser] = useState<User | null>(null);
   const [imageLoading, setImageLoading] = useState(true);
 
   const gettingUser = async () => {
@@ -27,22 +30,29 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     const res = await axios.post("/api/getRecipeUser", {
       userId: recipe.user_id,
     });
-    setUser(res.data.user);
+    setTempUser(res.data.user);
   };
   useEffect(() => {
     gettingUser();
   }, [recipe]);
-
   const handleDelete = async () => {
     try {
-      await axios.post(`/api/deleteRecipe`, {
+      const response = await axios.post(`/api/deleteRecipe`, {
         recipeId: recipe.id,
+        userId: user?.id,
       });
-      removeRecipe(recipe.id);
-      // alert("Recipe deleted successfully");
-    } catch (error) {
-      console.error("Failed to delete recipe:", error);
-      // alert("Failed to delete recipe");
+
+      if (response.status === 200) {
+        toast("Recipe deleted successfully!", { style: { color: "green" } });
+        removeRecipe(recipe.id);
+      }
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        toast("You are not authorized to delete this recipe.");
+      } else {
+        toast("An error occurred. Please try again.");
+      }
+      console.log("Failed to delete recipe:", error);
     }
   };
 
@@ -98,7 +108,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           {recipe.description}
         </p>
         <div className="flex items-center justify-between">
-          <UserBadge user={user} />
+          <UserBadge user={tempuser} />
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <Clock className="h-3.5 w-3.5" />
             <span>{recipe.cook_time} mins</span>
