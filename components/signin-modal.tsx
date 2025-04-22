@@ -7,7 +7,7 @@ import { useLoginForm } from "@/hooks/formValidation";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import { userStore } from "@/stores/userStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface SignInModalProps {
@@ -22,6 +22,15 @@ export function SignInModal({ onClose }: SignInModalProps) {
     formState: { errors },
   } = useLoginForm();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Disable scrolling when the modal is open
+    document.body.style.overflow = "hidden";
+    return () => {
+      // Re-enable scrolling when the modal is closed
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const submitForm = (data: any) => {
     setLoading(true);

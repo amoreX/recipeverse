@@ -55,14 +55,16 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="h-screen bg-[#FFFCF8] flex justify-center items-center max-h-screen max-w-screen  overflow-hidden">
+    <div className="h-screen bg-[#FFFCF8] flex justify-center items-center max-h-screen max-w-screen overflow-hidden">
       <motion.div
-        className="container flex min-h-screen flex-col items-center justify-center px-4 py-12 md:px-6"
+        className="container flex min-h-screen flex-col items-center justify-center px-4 py-12 md:px-6 overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <FloatingEmojis />
+        <div className="absolute inset-0 overflow-hidden">
+          <FloatingEmojis />
+        </div>
         <motion.div
           className="mx-auto w-full max-w-md z-20"
           initial={{ opacity: 0, y: 16 }}
