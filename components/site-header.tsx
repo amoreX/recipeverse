@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react"; // Import useState and useEffect
 import { LogOut, Settings, User } from "lucide-react";
-
+import { placeholder } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -88,7 +88,7 @@ export function SiteHeader() {
                     <Link href="/routes/profile">
                       <Avatar className="h-8 w-8">
                         <AvatarImage
-                          src={user.avatar_url || "/placeholder.svg"}
+                          src={user.avatar_url || placeholder}
                           className="object-cover"
                         />
                         <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>

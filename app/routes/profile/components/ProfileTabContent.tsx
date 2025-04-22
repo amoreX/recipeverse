@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { PictureUpload } from "./PictureUpload";
 import Image from "next/image";
-import { ProfileTabContentProps } from "@/lib/types";
+import { ProfileTabContentProps, placeholder } from "@/lib/types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRecipeStore } from "@/stores/recipeStore";
@@ -48,7 +48,7 @@ export function ProfileTabContent({
                   <div className="h-6 w-6 animate-spin rounded-full border-2 border-t-transparent border-[#6B8068]"></div>
                 </div>
                 <Image
-                  src={user.avatar_url || "/placeholder.svg"}
+                  src={user.avatar_url || placeholder}
                   alt={"user_name"}
                   fill
                   className="object-cover"

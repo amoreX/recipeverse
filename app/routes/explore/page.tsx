@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { Recipe, placeholder } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { RecipeCardSkeleton } from "@/components/recipe-skeleton-card";
+import { Skeleton } from "@/components/ui/skeleton";
 export default function Explore() {
   const router = useRouter();
   const [recipes, setRecipes] = useState<Recipe[]>();
@@ -18,6 +19,7 @@ export default function Explore() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [heroImage, setHeroImage] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [heroLoading, setHeroLoading] = useState(true);
 
   useEffect(() => {
     const gettingAllRecipe = async () => {
@@ -70,13 +72,24 @@ export default function Explore() {
   return (
     <LayoutWithHeader>
       <section className="relative">
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {heroImage && (
+            <img
+              src={heroImage}
+              alt="Hero"
+              onLoad={() => setHeroLoading(false)}
+              className={`h-full w-full object-cover transition-opacity duration-700 ${
+                heroLoading ? "opacity-0" : "opacity-100"
+              }`}
+            />
+          )}
+          {heroLoading && (
+            <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30" />
         </div>
-        <div className="relative flex min-h-[400px] flex-col items-center justify-center gap-4 px-4 py-24 text-center md:px-6">
+
+        <div className="relative z-10 flex min-h-[400px] flex-col items-center justify-center gap-4 px-4 py-24 text-center md:px-6">
           <h1 className="font-serif text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
             Discover & Share Delicious Recipes
           </h1>

@@ -14,19 +14,28 @@ import { NoRecipeSvg } from "@/components/noRecipeSvg";
 import axios from "axios";
 import { userStore } from "@/stores/userStore";
 import { Recipe } from "@/lib/types";
+import { RecipeCardSkeleton } from "@/components/recipe-skeleton-card";
 
 export default function FavoritesPage() {
   const { user } = userStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const getfav = async () => {
     if (!user?.id) return;
-    const res = await axios.post("/api/getFavourites", {
-      userId: user.id,
-    });
-    setSavedRecipes(res.data.favs || []);
+    setLoading(true);
+    try {
+      const res = await axios.post("/api/getFavourites", {
+        userId: user.id,
+      });
+      setSavedRecipes(res.data.favs || []);
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -85,26 +94,33 @@ export default function FavoritesPage() {
           ))}
         </div>
 
-        {filteredRecipes.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredRecipes.map((recipe) => (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {loading ? (
+            <>
+              <RecipeCardSkeleton />
+              <RecipeCardSkeleton />
+              <RecipeCardSkeleton />
+            </>
+          ) : filteredRecipes.length > 0 ? (
+            filteredRecipes.map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
-            ))}
-          </div>
-        ) : (
-          <div className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-[#E8E2D9] bg-white p-8 text-center">
-            <NoRecipeSvg />
-            <h3 className="mb-2 font-serif text-lg font-semibold text-[#2D2A26]">
-              No favorites yet
-            </h3>
-            <p className="mb-4 text-muted-foreground">
-              Start exploring recipes and save your favorites to see them here.
-            </p>
-            <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
-              <Link href="/">Explore Recipes</Link>
-            </Button>
-          </div>
-        )}
+            ))
+          ) : (
+            <div className="flex min-h-[300px] w-screen flex-col items-center justify-center rounded-2xl border border-dashed border-[#E8E2D9] bg-white p-8 text-center">
+              <NoRecipeSvg />
+              <h3 className="mb-2 font-serif text-lg font-semibold text-[#2D2A26]">
+                No favorites yet
+              </h3>
+              <p className="mb-4 text-muted-foreground">
+                Start exploring recipes and save your favorites to see them
+                here.
+              </p>
+              <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
+                <Link href="/routes/explore">Explore Recipes</Link>
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </LayoutWithHeader>
   );
