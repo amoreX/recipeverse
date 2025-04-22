@@ -1,16 +1,17 @@
 import { prisma } from "@/lib/prisma";
 
-export const GET = async (req, res) => {
+export const POST = async (req, res) => {
+const {userId}=await req.json();
   try {
     let recipe = await prisma.recipe.findMany({
       where: {
-        is_published: true,
+        user_id: userId,
       },
     });
 
     return new Response(
       JSON.stringify({
-        recipes: recipe,
+        recipeDetails: recipe,
         message: "Fetching All Recipe Succesfull!",
       }),
       {
