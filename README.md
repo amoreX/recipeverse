@@ -1,6 +1,6 @@
-# Plated
+# Recipe Verse
 
-Plated is a recipe management platform built with [Next.js](https://nextjs.org). It allows users to create, manage, and share recipes with others. The platform supports features like saving recipes, publishing drafts, and tagging recipes for better categorization.
+Recipe Verse is a recipe management platform built with [Next.js](https://nextjs.org). It allows users to create, manage, and share recipes with others. The platform supports features like saving recipes, publishing drafts, and tagging recipes for better categorization.
 
 ## Features
 
@@ -37,7 +37,7 @@ You can start editing the page by modifying files in the `app` directory. The pa
 
 ## Contributing
 
-We welcome contributions to Plated! To contribute:
+We welcome contributions to Recipe Verse! To contribute:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
@@ -55,4 +55,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-Plated can be deployed on [Vercel](https://vercel.com) for production. Follow the [Vercel deployment guide](https://nextjs.org/docs/deployment) for more details.
+RecipeVerse can be deployed on [Vercel](https://vercel.com) for production. Follow the [Vercel deployment guide](https://nextjs.org/docs/deployment) for more details.

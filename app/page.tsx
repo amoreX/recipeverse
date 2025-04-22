@@ -28,7 +28,7 @@ export default function SignInPage() {
           password: data.password,
         });
         setUser(res.data.userDetails);
-        router.push("/routes/profile");
+        router.push("/routes/explore");
         toast("Login Successful !", {
           style: {
             backgroundColor: "white",
