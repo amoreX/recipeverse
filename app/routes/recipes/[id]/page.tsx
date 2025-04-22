@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { User } from "@/lib/types";
 import axios from "axios";
+import { motion } from "framer-motion"; // Import framer-motion
 
 export default function RecipeDetailPage() {
   const params = useParams();
@@ -88,21 +89,36 @@ export default function RecipeDetailPage() {
       .catch((err) => console.error("Failed to copy URL: ", err));
   };
 
+  // ai slop here
   if (isLoading) {
     return (
       <LayoutWithHeader>
         <section className="px-4 py-8 md:px-6 md:py-12">
           <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-[2fr_1fr]">
+            {/* Left column: Recipe Content */}
             <div className="space-y-4">
-              <Skeleton className="h-6 w-1/3" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-6 w-2/5 mt-8" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-64 w-full rounded-2xl" />{" "}
+              {/* Recipe Image */}
+              <Skeleton className="h-6 w-1/2" /> {/* Recipe Title */}
+              <Skeleton className="h-4 w-full" /> {/* Description */}
+              <Skeleton className="h-4 w-5/6" /> {/* Description */}
+              <Skeleton className="h-6 w-2/5 mt-8" /> {/* Instructions */}
+              <Skeleton className="h-4 w-full" /> {/* Instructions */}
+              <Skeleton className="h-4 w-2/3" /> {/* Instructions */}
             </div>
+            {/* Right column: User and Action Buttons */}
             <div>
-              <Skeleton className="h-64 w-full rounded-2xl" />
+              <Skeleton className="h-16 w-full rounded-2xl" />{" "}
+              {/* User Badge */}
+              <div className="mt-6">
+                <Skeleton className="h-8 w-3/4 mb-2" /> {/* Save Button */}
+                <Skeleton className="h-8 w-3/4" /> {/* Share Button */}
+              </div>
+              <div className="mt-6">
+                <Skeleton className="h-6 w-full" /> {/* Ingredients Header */}
+                <Skeleton className="h-4 w-full" /> {/* Ingredients List */}
+                <Skeleton className="h-4 w-full" /> {/* Ingredients List */}
+              </div>
             </div>
           </div>
         </section>
@@ -129,30 +145,50 @@ export default function RecipeDetailPage() {
       </LayoutWithHeader>
     );
   }
+
   if (recipe)
     return (
       <LayoutWithHeader>
         <section className="relative">
-          <div
+          <motion.div
             className="absolute inset-0 bg-cover bg-center"
             style={{
               backgroundImage: `url(${recipe.image_url})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30" />
-          </div>
-          <div className="relative flex min-h-[300px] flex-col items-center justify-center gap-4 px-4 py-16 text-center md:px-6 md:py-24">
+          </motion.div>
+
+          <motion.div
+            className="relative flex min-h-[300px] flex-col items-center justify-center gap-4 px-4 py-16 text-center md:px-6 md:py-24"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <div className="flex gap-2">
               {recipe.tags.map((tag) => (
                 <TagChip key={tag} tag={tag} variant="light" />
               ))}
             </div>
-            <h1 className="font-serif text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            <motion.h1
+              className="font-serif text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               {recipe.title}
-            </h1>
-            <div className="flex items-center gap-4 text-white">
+            </motion.h1>
+            <motion.div
+              className="flex items-center gap-4 text-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
               <div className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
                 <span className="text-sm">{recipe.cook_time} mins</span>
@@ -160,30 +196,60 @@ export default function RecipeDetailPage() {
               <div className="flex items-center gap-1">
                 <span className="text-sm">{recipe.servings} servings</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
         <section className="px-4 py-8 md:px-6 md:py-12">
           <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-[2fr_1fr]">
-            <div className="order-2 md:order-1">
+            <motion.div
+              className="order-2 md:order-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.4 }}
+            >
               <div className="mb-8">
-                <h2 className="mb-4 font-serif text-xl font-semibold text-[#2D2A26]">
+                <motion.h2
+                  className="mb-4 font-serif text-xl font-semibold text-[#2D2A26]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
                   Description
-                </h2>
-                <p className="text-[#2D2A26]/80">{recipe.description}</p>
+                </motion.h2>
+                <motion.p
+                  className="text-[#2D2A26]/80"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  {recipe.description}
+                </motion.p>
               </div>
               <div className="mb-8">
-                <h2 className="mb-4 font-serif text-xl font-semibold text-[#2D2A26]">
+                <motion.h2
+                  className="mb-4 font-serif text-xl font-semibold text-[#2D2A26]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
                   Instructions
-                </h2>
-                <ol className="space-y-6">
+                </motion.h2>
+                <motion.ol
+                  className="space-y-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                >
                   {recipe.instructions
                     .sort((a, b) => a.step_number - b.step_number)
                     .map((instruction, index) => (
-                      <li
+                      <motion.li
                         key={instruction.step_number}
                         className="grid gap-4 md:grid-cols-[auto_1fr]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.1 * index }}
                       >
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#6B8068] font-medium text-white">
                           {index + 1}
@@ -193,13 +259,18 @@ export default function RecipeDetailPage() {
                             {instruction.description}
                           </p>
                         </div>
-                      </li>
+                      </motion.li>
                     ))}
-                </ol>
+                </motion.ol>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="order-1 md:order-2">
+            <motion.div
+              className="order-1 md:order-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.4 }}
+            >
               <div className="sticky top-4 rounded-2xl border border-[#E8E2D9] bg-white p-6">
                 <div className="mb-6 flex items-center justify-between">
                   <UserBadge user={user} />
@@ -229,7 +300,13 @@ export default function RecipeDetailPage() {
                       .map((ingredient, index) => {
                         const displayText = getIngredientDisplay(ingredient);
                         return (
-                          <li key={index} className="flex items-start gap-2">
+                          <motion.li
+                            key={index}
+                            className="flex items-start gap-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.6, delay: 0.1 * index }}
+                          >
                             <Checkbox
                               id={`ingredient-${index}`}
                               checked={checkedIngredients.includes(displayText)}
@@ -248,13 +325,13 @@ export default function RecipeDetailPage() {
                             >
                               {displayText}
                             </label>
-                          </li>
+                          </motion.li>
                         );
                       })}
                   </ul>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
       </LayoutWithHeader>
