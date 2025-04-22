@@ -87,3 +87,6 @@ export interface BasicInformationProps {
   servings: number;
   setServings: (value: number) => void;
 }
+
+export const placeholder =
+  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.ledr.com%2Fcolours%2Fgrey.jpg&f=1&nofb=1&ipt=abc22a062325abddccc06b7ad817ab568cfafa7b9fb901967613cd0ad0f5f3c3";
