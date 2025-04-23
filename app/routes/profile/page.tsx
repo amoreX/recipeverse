@@ -12,7 +12,8 @@ import { motion } from "framer-motion";
 export default function ProfilePage() {
   const router = useRouter();
   const { user, isAuthenticated, hasHydrated } = userStore();
-  const { recipes, publishedRecipes, draftRecipes, setRecipes } = useRecipeStore();
+  const { recipes, publishedRecipes, draftRecipes, setRecipes } =
+    useRecipeStore();
 
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +23,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (hasHydrated && !isAuthenticated) {
-      router.push("/");
+      router.push("/routes/signin");
     }
   }, [router, hasHydrated, isAuthenticated]);
 

@@ -37,7 +37,7 @@ export default function CreateRecipePage() {
 
   useEffect(() => {
     if (hasHydrated && !isAuthenticated) {
-      router.push("/");
+      router.push("/routes/signin");
     }
   }, [router, hasHydrated, isAuthenticated]);
 

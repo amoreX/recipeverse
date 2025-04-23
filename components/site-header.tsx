@@ -19,7 +19,7 @@ import { userStore } from "@/stores/userStore";
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const { user } = userStore();
+  const { user, clearUser } = userStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
   const isActive = (path: string) => {
     return pathname === path || pathname.startsWith(`${path}/`);
@@ -36,7 +36,10 @@ export function SiteHeader() {
       body.style.overflow = ""; // Cleanup on unmount
     };
   }, [isMenuOpen]);
-
+  const signout = () => {
+    clearUser();
+    window.location.href = "/routes/explore";
+  };
   return (
     <header className="border-b border-[#E8E2D9] bg-white">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
@@ -83,17 +86,14 @@ export function SiteHeader() {
                   <Button
                     variant="ghost"
                     className="relative h-8 w-8 rounded-full"
-                    asChild
                   >
-                    <Link href="/routes/profile">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage
-                          src={user.avatar_url || placeholder}
-                          className="object-cover"
-                        />
-                        <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                    </Link>
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage
+                        src={user.avatar_url || placeholder}
+                        className="object-cover"
+                      />
+                      <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                    </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
@@ -116,8 +116,7 @@ export function SiteHeader() {
                   <DropdownMenuItem
                     className="cursor-pointer"
                     onClick={() => {
-                      //   signOut();
-                      window.location.href = "/";
+                      signout();
                     }}
                   >
                     <LogOut className="mr-2 h-4 w-4" />
@@ -139,7 +138,7 @@ export function SiteHeader() {
                 className="relative h-8 w-8 rounded-full"
                 asChild
               >
-                <Link href="/">
+                <Link href="/routes/signin">
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-[#F8F5F0] text-[#6B8068]">
                       <User className="h-4 w-4" />

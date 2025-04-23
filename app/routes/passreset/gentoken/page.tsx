@@ -27,7 +27,7 @@ export default function GenerateTokenPage() {
         });
 
         setTimeout(() => {
-          router.push("/");
+          router.push("/routes/signin");
         }, 2000);
       } else {
         toast(message || "Something went wrong!", {

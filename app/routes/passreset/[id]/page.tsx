@@ -32,7 +32,7 @@ export default function GenerateTokenPage() {
       if (res.status === 200) {
         toast.success("Password successfully reset!");
         setTimeout(() => {
-          router.push("/");
+          router.push("/routes/signin");
         }, 2000);
       } else {
         toast.error(
