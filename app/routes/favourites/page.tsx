@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { RecipeCard } from "@/components/recipe-card";
 import { TagChip } from "@/components/tag-chip";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { useRouter } from "next/navigation";
 import { popularTags } from "@/lib/data";
 import { LayoutWithHeader } from "@/components/layout-with-header";
 import { NoRecipeSvg } from "@/components/noRecipeSvg";
@@ -19,7 +19,8 @@ import { Recipe } from "@/lib/types";
 import { RecipeCardSkeleton } from "@/components/recipe-skeleton-card";
 
 export default function FavoritesPage() {
-  const { user } = userStore();
+  const router = useRouter();
+  const { user, hasHydrated, isAuthenticated } = userStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -62,6 +63,14 @@ export default function FavoritesPage() {
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   };
+
+  useEffect(() => {
+    if (hasHydrated && !isAuthenticated) {
+      router.push("/routes/signin");
+    }
+  }, [router, hasHydrated, isAuthenticated]);
+
+  if (!hasHydrated) return null;
 
   return (
     <LayoutWithHeader>

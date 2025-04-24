@@ -22,7 +22,7 @@ interface RecipeCardProps {
 
 export function RecipeCard({ recipe, isDraft }: RecipeCardProps) {
   const router = useRouter();
-  const { user } = userStore();
+  const { user, isAuthenticated } = userStore();
   const { selectRecipe, removeRecipe } = useRecipeStore();
   const [tempuser, setTempUser] = useState<User | null>(null);
   const [imageLoading, setImageLoading] = useState(true);
@@ -126,15 +126,17 @@ export function RecipeCard({ recipe, isDraft }: RecipeCardProps) {
             <Clock className="h-3.5 w-3.5" />
             <span>{recipe.cook_time} mins</span>
           </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent triggering card click
-              handleDelete();
-            }}
-            className="p-1 text-red-500 hover:text-red-700"
-          >
-            <Trash className="h-5 w-5" />
-          </button>
+          {isAuthenticated && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering card click
+                handleDelete();
+              }}
+              className="p-1 text-red-500 hover:text-red-700"
+            >
+              <Trash className="h-5 w-5" />
+            </button>
+          )}
         </div>
         {isDraft ? (
           <div className="mt-2">
