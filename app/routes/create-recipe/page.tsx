@@ -35,16 +35,11 @@ export default function CreateRecipePage() {
   const [cuisine, setCuisine] = useState<string>();
   const [recipeUrl, setRecipeUrl] = useState<string>("");
 
-  // useEffect(() => {
-  //   if (hasHydrated && !isAuthenticated) {
-  //     router.push("/routes/signin");
-  //   }
-  // }, [router, hasHydrated, isAuthenticated]);
-
   useEffect(() => {
-    console.log("This is from zustand:", recipes);
-    console.log("This is drafted:", draftRecipes);
-  }, [recipes]);
+    if (hasHydrated && !isAuthenticated) {
+      router.push("/routes/signin");
+    }
+  }, [router, hasHydrated, isAuthenticated]);
 
   if (!hasHydrated) return null;
 
