@@ -100,7 +100,7 @@ export function ProfileTabs({
                   Cancel
                 </Button>
                 <Button
-                  className="bg-[#6B8068] hover:bg-[#5A6B58]"
+                  className="bg-[#507c49] hover:bg-[#5A6B58]"
                   onClick={handleEditSave}
                   disabled={loading}
                 >
@@ -110,14 +110,14 @@ export function ProfileTabs({
             ) : (
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-[#6B8068]  hover:bg-[#5A6B58]"
+                className="bg-[#507c49]  hover:bg-[#5A6B58]"
               >
                 <Pencil className="mr-2 h-4 w-4" />
                 Edit Profile
               </Button>
             )
           ) : (
-            <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
+            <Button asChild className="bg-[#507c49] hover:bg-[#5A6B58]">
               <a href="/routes/create-recipe">
                 <Plus className="mr-2 h-4 w-4" />
                 New Recipe

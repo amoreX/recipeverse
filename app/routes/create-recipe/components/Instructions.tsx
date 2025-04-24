@@ -49,7 +49,7 @@ export function Instructions({
         <div className="space-y-4">
           {instructions.map((instruction, index) => (
             <div key={index} className="flex gap-4">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#6B8068] font-medium text-white">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#507c49] font-medium text-white">
                 {index + 1}
               </div>
               <div className="flex-1">
@@ -57,7 +57,7 @@ export function Instructions({
                   placeholder={`Step ${index + 1}...`}
                   value={instruction.description}
                   onChange={(e) => updateInstruction(index, e.target.value)}
-                  className="min-h-[80px] resize-y border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+                  className="min-h-[80px] resize-y border-[#E8E2D9] focus-visible:ring-[#507c49]"
                 />
                 <Button
                   variant="ghost"

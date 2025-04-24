@@ -55,8 +55,8 @@ export function SiteHeader() {
               isActive("/routes/explore") &&
               !isActive("/routes/favorites") &&
               !isActive("/routes/sign-in")
-                ? "text-[#6B8068]"
-                : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
+                ? "text-[#507c49]"
+                : "text-[#2D2A26]/75 transition-all  hover:text-[#507c49] duration-300 ease-in-out"
             }`}
           >
             Explore
@@ -65,8 +65,8 @@ export function SiteHeader() {
             href="/routes/favourites"
             className={`text-sm font-medium ${
               isActive("/routes/favourites")
-                ? "text-[#6B8068]"
-                : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
+                ? "text-[#507c49]"
+                : "text-[#2D2A26]/75 transition-all  hover:text-[#507c49] duration-300 ease-in-out"
             }`}
           >
             Favorites
@@ -76,7 +76,7 @@ export function SiteHeader() {
           {user ? (
             <>
               <Button
-                className="hidden bg-[#6B8068] text-white hover:bg-[#5A6B58] md:flex"
+                className="hidden bg-[#507c49] text-white hover:bg-[#5A6B58] duration-300 ease-in-out transition-all md:flex"
                 asChild
               >
                 <Link href="/routes/create-recipe">Create Recipe</Link>
@@ -128,7 +128,7 @@ export function SiteHeader() {
           ) : (
             <>
               <Button
-                className="hidden bg-[#6B8068] text-white hover:bg-[#5A6B58] md:flex"
+                className="hidden bg-[#507c49] text-white hover:bg-[#5A6B58] md:flex"
                 asChild
               >
                 <Link href="/routes/create-recipe">Create Recipe</Link>
@@ -140,7 +140,7 @@ export function SiteHeader() {
               >
                 <Link href="/routes/signin">
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-[#F8F5F0] text-[#6B8068]">
+                    <AvatarFallback className="bg-[#F8F5F0] text-[#507c49]">
                       <User className="h-4 w-4" />
                     </AvatarFallback>
                   </Avatar>
@@ -193,8 +193,8 @@ export function SiteHeader() {
               isActive("/routes/explore") &&
               !isActive("/routes/favorites") &&
               !isActive("/routes/sign-in")
-                ? "text-[#6B8068]"
-                : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
+                ? "text-[#507c49]"
+                : "text-[#2D2A26] transition-colors hover:text-[#507c49]"
             }`}
           >
             Explore
@@ -203,8 +203,8 @@ export function SiteHeader() {
             href="/routes/favourites"
             className={`text-sm font-medium ${
               isActive("/routes/favorites")
-                ? "text-[#6B8068]"
-                : "text-[#2D2A26] transition-colors hover:text-[#6B8068]"
+                ? "text-[#507c49]"
+                : "text-[#2D2A26] transition-colors hover:text-[#507c49]"
             }`}
           >
             Favorites

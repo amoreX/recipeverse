@@ -122,7 +122,7 @@ export default function SignInPage() {
                 <Input
                   id="email"
                   {...register("email")}
-                  className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+                  className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
                 />
                 {errors?.email?.message && (
                   <p className="text-red-500">{errors.email.message}</p>
@@ -142,7 +142,7 @@ export default function SignInPage() {
                   id="password"
                   type="password"
                   {...register("password")}
-                  className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+                  className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
                 />
                 {errors?.password?.message && (
                   <p className="text-red-500">{errors.password.message}</p>
@@ -158,7 +158,7 @@ export default function SignInPage() {
               >
                 <a
                   href="/routes/passreset/gentoken"
-                  className="text-sm text-[#6B8068] hover:underline"
+                  className="text-sm text-[#507c49] hover:underline"
                 >
                   Forgot Password?
                 </a>
@@ -173,13 +173,13 @@ export default function SignInPage() {
                 {!loading ? (
                   <Button
                     type="submit"
-                    className="w-full bg-[#6B8068] hover:bg-[#5A6B58]"
+                    className="w-full bg-[#507c49] hover:bg-[#5A6B58]"
                   >
                     Sign in
                   </Button>
                 ) : (
                   <div className="flex justify-center items-center">
-                    <Button className="w-fit rounded-full bg-[#6B8068] hover:bg-[#5A6B58]">
+                    <Button className="w-fit rounded-full bg-[#507c49] hover:bg-[#5A6B58]">
                       <Loader className="animate-spin" />
                     </Button>
                   </div>

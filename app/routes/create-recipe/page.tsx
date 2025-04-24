@@ -35,11 +35,11 @@ export default function CreateRecipePage() {
   const [cuisine, setCuisine] = useState<string>();
   const [recipeUrl, setRecipeUrl] = useState<string>("");
 
-  useEffect(() => {
-    if (hasHydrated && !isAuthenticated) {
-      router.push("/routes/signin");
-    }
-  }, [router, hasHydrated, isAuthenticated]);
+  // useEffect(() => {
+  //   if (hasHydrated && !isAuthenticated) {
+  //     router.push("/routes/signin");
+  //   }
+  // }, [router, hasHydrated, isAuthenticated]);
 
   useEffect(() => {
     console.log("This is from zustand:", recipes);
@@ -131,7 +131,12 @@ export default function CreateRecipePage() {
           transition={{ duration: 0.4 }}
           className="mb-8 flex items-center"
         >
-          <Button variant="ghost" size="icon" asChild className="mr-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            className="mr-2 cursor-pointer"
+          >
             <Link href="/routes/profile" className="text-[#2D2A26]">
               <ChevronLeft className="h-5 w-5" />
               <span className="sr-only">Back to home</span>
@@ -220,13 +225,13 @@ export default function CreateRecipePage() {
             >
               <Button
                 variant="outline"
-                className="flex-1 border-[#E8E2D9] hover:bg-[#F8F5F0]"
+                className="flex-1 border-[#E8E2D9] hover:bg-[#F8F5F0] cursor-pointer"
                 onClick={handleDraft}
               >
                 Save Draft
               </Button>
               <Button
-                className="flex-1 bg-[#6B8068] hover:bg-[#5A6B58]"
+                className="flex-1 bg-[#507c49] hover:bg-[#5A6B58] cursor-pointer"
                 onClick={handleSave}
               >
                 Publish Recipe

@@ -82,7 +82,7 @@ export function RecipeCard({ recipe, isDraft }: RecipeCardProps) {
       <div className="relative block overflow-hidden">
         {imageLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#f3f1ed]">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#6B8068] border-t-transparent" />
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#507c49] border-t-transparent" />
           </div>
         )}
         <Image
@@ -114,7 +114,7 @@ export function RecipeCard({ recipe, isDraft }: RecipeCardProps) {
             </span>
           )}
         </div>
-        <h3 className="mb-2 font-serif text-lg font-semibold tracking-tight text-[#2D2A26] group-hover:text-[#6B8068]">
+        <h3 className="mb-2 font-serif text-lg font-semibold tracking-tight text-[#2D2A26] group-hover:text-[#507c49]">
           {recipe.title}
         </h3>
         <p className="mb-4 line-clamp-2 text-sm text-[#2D2A26]/70 min-h-[2.5rem]">
@@ -143,7 +143,7 @@ export function RecipeCard({ recipe, isDraft }: RecipeCardProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full border-[#6B8068] bg-[#6B8068] cursor-pointer text-white hover:bg-[#5b6d57] hover:text-white"
+              className="w-full border-[#507c49] bg-[#507c49] cursor-pointer text-white hover:bg-[#5b6d57] hover:text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 handlePublish();

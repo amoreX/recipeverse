@@ -82,7 +82,7 @@ export function SignInModal({ onClose }: SignInModalProps) {
             <Label>Email</Label>
             <Input
               {...register("email")}
-              className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+              className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
             />
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email.message}</p>
@@ -93,7 +93,7 @@ export function SignInModal({ onClose }: SignInModalProps) {
             <Input
               type="password"
               {...register("password")}
-              className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+              className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
             />
             {errors.password && (
               <p className="text-sm text-red-500">{errors.password.message}</p>
@@ -101,7 +101,7 @@ export function SignInModal({ onClose }: SignInModalProps) {
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#6B8068] hover:bg-[#5A6B58]"
+            className="w-full bg-[#507c49] hover:bg-[#5A6B58]"
             disabled={loading}
           >
             {loading ? <Loader className="animate-spin" /> : "Sign in"}
