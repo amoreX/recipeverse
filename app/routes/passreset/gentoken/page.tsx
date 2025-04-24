@@ -10,10 +10,12 @@ export default function GenerateTokenPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
+      console.log(email);
       const res = await axios.post("/api/generateToken", { email });
       const message = res.data?.message;
 

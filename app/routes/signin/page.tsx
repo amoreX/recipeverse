@@ -25,7 +25,10 @@ export default function SignInPage() {
     setLoading(true);
     const handleLogin = async () => {
       try {
-        const res = await axios.post("api/auth", {
+        console.log("submit butt clicked");
+        console.log(data.email);
+        console.log(data.password);
+        const res = await axios.post("/api/auth", {
           email: data.email,
           password: data.password,
         });

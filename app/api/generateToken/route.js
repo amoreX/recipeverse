@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 
 export const POST = async (req, res) => {
   const { email } = await req.json();

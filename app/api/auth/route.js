@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 
 export const POST = async (req, res) => {
   const { email, password } = await req.json();
+  console.log(email, password);
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
     let user = await prisma.user.findUnique({
