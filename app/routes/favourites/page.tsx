@@ -102,7 +102,7 @@ export default function FavoritesPage() {
                 placeholder="Search your favorites..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full border-[#E8E2D9] pl-10 focus-visible:ring-[#6B8068]"
+                className="w-full border-[#E8E2D9] pl-10 focus-visible:ring-[#507c49]"
               />
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function FavoritesPage() {
                   Start exploring recipes and save your favorites to see them
                   here.
                 </p>
-                <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
+                <Button asChild className="bg-[#507c49] hover:bg-[#5A6B58]">
                   <Link href="/routes/explore">Explore Recipes</Link>
                 </Button>
               </motion.div>

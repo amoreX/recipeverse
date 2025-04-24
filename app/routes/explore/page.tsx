@@ -119,7 +119,7 @@ export default function Explore() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for recipes..."
-                className="w-full rounded-full border-none bg-white/90 pl-10 text-[#2D2A26] placeholder:text-muted-foreground focus-visible:ring-[#6B8068]"
+                className="w-full rounded-full border-none bg-white/90 pl-10 py-6 text-[#2D2A26] placeholder:text-muted-foreground duration-300 transition-all ease-in-out focus-visible:ring-2 focus-visible:ring-[#507c49]"
               />
             </motion.div>
           </div>

@@ -66,8 +66,8 @@ export function SaveButton({ recipeId }: SaveButtonProps) {
         variant="secondary"
         className={`h-9 w-9 rounded-full ${
           saved
-            ? "bg-[#6B8068] text-white hover:bg-[#5A6B58]"
-            : "bg-white/90 text-[#2D2A26] hover:bg-white hover:text-[#6B8068]"
+            ? "bg-[#507c49] text-white hover:bg-[#5A6B58]"
+            : "bg-white/90 text-[#2D2A26] hover:bg-white hover:text-[#507c49]"
         } backdrop-blur-sm`}
         onClick={toggleSave}
       >

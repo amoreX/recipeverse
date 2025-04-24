@@ -53,6 +53,7 @@ export function Ingredients({ ingredients, setIngredients }: IngredientsProps) {
             <Input
               placeholder="Description"
               value={ingredient.description}
+              
               onChange={(e) =>
                 updateIngredient(index, "description", e.target.value)
               }
@@ -83,9 +84,9 @@ export function Ingredients({ ingredients, setIngredients }: IngredientsProps) {
         <Button
           variant="outline"
           onClick={addIngredient}
-          className="border-[#E8E2D9] hover:bg-[#F8F5F0]"
+          className="border-[#E8E2D9] hover:bg-[#F8F5F0] "
         >
-          <Plus className="mr-1 h-4 w-4" />
+          <Plus className="mr-1 h-4 w-4 cursor-pointer" />
           Add Ingredient
         </Button>
       </CardContent>

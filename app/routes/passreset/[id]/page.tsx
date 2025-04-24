@@ -73,13 +73,13 @@ export default function GenerateTokenPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+              className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
               required
             />
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#6B8068] hover:bg-[#5A6B58]"
+            className="w-full bg-[#507c49] hover:bg-[#5A6B58]"
             disabled={loading}
           >
             {loading ? "Resetting..." : "Reset"}

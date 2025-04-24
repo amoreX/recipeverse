@@ -10,7 +10,7 @@ export default function GenerateTokenPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -70,13 +70,13 @@ export default function GenerateTokenPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+              className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
               required
             />
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#6B8068] hover:bg-[#5A6B58]"
+            className="w-full bg-[#507c49] hover:bg-[#5A6B58]"
             disabled={loading}
           >
             {loading ? "Sending..." : "OK"}

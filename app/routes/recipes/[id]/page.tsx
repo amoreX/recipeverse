@@ -137,7 +137,7 @@ export default function RecipeDetailPage() {
             <p className="mt-2 text-muted-foreground">
               The recipe you're looking for doesn't exist or has been removed.
             </p>
-            <Button asChild className="mt-4 bg-[#6B8068] hover:bg-[#5A6B58]">
+            <Button asChild className="mt-4 bg-[#507c49] hover:bg-[#5A6B58]">
               <Link href="/">Go back home</Link>
             </Button>
           </div>
@@ -251,7 +251,7 @@ export default function RecipeDetailPage() {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.1 * index }}
                       >
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#6B8068] font-medium text-white">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#507c49] font-medium text-white">
                           {index + 1}
                         </div>
                         <div>
@@ -313,7 +313,7 @@ export default function RecipeDetailPage() {
                               onCheckedChange={() =>
                                 toggleIngredient(displayText)
                               }
-                              className="mt-1 border-[#E8E2D9] data-[state=checked]:border-[#6B8068] data-[state=checked]:bg-[#6B8068]"
+                              className="mt-1 border-[#E8E2D9] data-[state=checked]:border-[#507c49] data-[state=checked]:bg-[#507c49]"
                             />
                             <label
                               htmlFor={`ingredient-${index}`}

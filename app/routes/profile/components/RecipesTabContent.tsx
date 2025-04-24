@@ -57,7 +57,7 @@ export function RecipesTabContent({
           onClick={() => setView("all")}
           className={
             view === "all"
-              ? "bg-[#6B8068] hover:bg-[#5A6B58]"
+              ? "bg-[#507c49] hover:bg-[#5A6B58]"
               : "border-[#E8E2D9] hover:bg-[#F8F5F0]"
           }
         >
@@ -68,7 +68,7 @@ export function RecipesTabContent({
           onClick={() => setView("published")}
           className={
             view === "published"
-              ? "bg-[#6B8068] hover:bg-[#5A6B58]"
+              ? "bg-[#507c49] hover:bg-[#5A6B58]"
               : "border-[#E8E2D9] hover:bg-[#F8F5F0]"
           }
         >
@@ -79,7 +79,7 @@ export function RecipesTabContent({
           onClick={() => setView("drafts")}
           className={
             view === "drafts"
-              ? "bg-[#6B8068] hover:bg-[#5A6B58]"
+              ? "bg-[#507c49] hover:bg-[#5A6B58]"
               : "border-[#E8E2D9] hover:bg-[#F8F5F0]"
           }
         >
@@ -100,7 +100,7 @@ export function RecipesTabContent({
             placeholder="Search your recipes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full border-[#E8E2D9] pl-10 focus-visible:ring-[#6B8068]"
+            className="w-full border-[#E8E2D9] pl-10 focus-visible:ring-[#507c49]"
           />
         </div>
       </motion.div>
@@ -180,7 +180,7 @@ export function RecipesTabContent({
               ? "You don't have any published recipes yet."
               : "You don't have any draft recipes yet."}
           </p>
-          <Button asChild className="bg-[#6B8068] hover:bg-[#5A6B58]">
+          <Button asChild className="bg-[#507c49] hover:bg-[#5A6B58]">
             <a href="/routes/create-recipe">Create Your First Recipe</a>
           </Button>
         </motion.div>

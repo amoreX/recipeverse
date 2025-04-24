@@ -27,7 +27,7 @@ export function BasicInformation({
               value={recipetitle}
               onChange={(e) => setRecipetitle(e.target.value)}
               placeholder="e.g., Homemade Sourdough Bread"
-              className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+              className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
             />
           </div>
           <div className="space-y-2">
@@ -37,7 +37,7 @@ export function BasicInformation({
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               placeholder="Describe your recipe in a few sentences..."
-              className="min-h-[100px] resize-y border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+              className="min-h-[100px] resize-y border-[#E8E2D9] focus-visible:ring-[#507c49]"
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -49,7 +49,7 @@ export function BasicInformation({
                 min="1"
                 placeholder="45"
                 onChange={(e) => setCookTime(Number(e.target.value))}
-                className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+                className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
               />
             </div>
             <div className="space-y-2">
@@ -60,7 +60,7 @@ export function BasicInformation({
                 min="1"
                 placeholder="4"
                 onChange={(e) => setServings(Number(e.target.value))}
-                className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+                className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
               />
             </div>
           </div>

@@ -45,7 +45,7 @@ export function ProfileTabContent({
                     user.avatar_url ? "hidden" : "block"
                   }`}
                 >
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-t-transparent border-[#6B8068]"></div>
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-t-transparent border-[#507c49]"></div>
                 </div>
                 <Image
                   src={user.avatar_url || placeholder}
@@ -56,7 +56,7 @@ export function ProfileTabContent({
                 />
               </>
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-4xl font-semibold text-[#6B8068]">
+              <div className="flex h-full w-full items-center justify-center text-4xl font-semibold text-[#507c49]">
                 {user?.name?.charAt(0)}
               </div>
             )}
@@ -76,7 +76,7 @@ export function ProfileTabContent({
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+                className="border-[#E8E2D9] focus-visible:ring-[#507c49]"
               />
             </div>
             <div className="space-y-2">
@@ -88,7 +88,7 @@ export function ProfileTabContent({
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Tell us about yourself..."
-                className="min-h-[150px] resize-none border-[#E8E2D9] focus-visible:ring-[#6B8068]"
+                className="min-h-[150px] resize-none border-[#E8E2D9] focus-visible:ring-[#507c49]"
               />
             </div>
             <PictureUpload setAvatar={setAvatar} />
@@ -107,13 +107,13 @@ export function ProfileTabContent({
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-lg bg-[#F8F5F0] p-4 text-center">
-                  <p className="font-serif text-2xl font-semibold text-[#6B8068]">
+                  <p className="font-serif text-2xl font-semibold text-[#507c49]">
                     {recipes.length}
                   </p>
                   <p className="text-sm text-muted-foreground">Recipes</p>
                 </div>
                 <div className="rounded-lg bg-[#F8F5F0] p-4 text-center">
-                  <p className="font-serif text-2xl font-semibold text-[#6B8068]">
+                  <p className="font-serif text-2xl font-semibold text-[#507c49]">
                     {numfav == 0 ? "No Favourites yet" : numfav}
                   </p>
                   <p className="text-sm text-muted-foreground">Favorites</p>

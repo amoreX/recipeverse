@@ -39,7 +39,7 @@ export function PictureUpload({ setAvatar }: PictureUploadProps) {
     <div className="flex flex-col items-center mt-4">
       <button
         type="button"
-        className="flex items-center gap-2 rounded-lg border border-[#E8E2D9] bg-[#F8F5F0] px-4 py-2 text-sm font-medium text-[#6B8068] shadow-sm hover:bg-[#E8E2D9]"
+        className="flex items-center gap-2 rounded-lg border border-[#E8E2D9] bg-[#F8F5F0] px-4 py-2 text-sm font-medium text-[#507c49] shadow-sm hover:bg-[#E8E2D9]"
         onClick={() => fileInputRef.current?.click()} // Trigger file input on button click
       >
         <Camera />

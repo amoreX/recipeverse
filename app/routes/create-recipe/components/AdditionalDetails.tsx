@@ -26,30 +26,36 @@ export function AdditionalDetails({
           <div className="space-y-2">
             <Label htmlFor="difficulty">Difficulty</Label>
             <Select onValueChange={setDiff}>
-              <SelectTrigger className="border-[#E8E2D9] focus-visible:ring-[#6B8068]">
+              <SelectTrigger className="border-[#E8E2D9] cursor-pointer focus-visible:ring-[#507c49]">
                 <SelectValue placeholder="Select difficulty" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="easy">Easy</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="hard">Hard</SelectItem>
+                <SelectItem className="cursor-pointer" value="easy">
+                  Easy
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="medium">
+                  Medium
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="hard">
+                  Hard
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="space-y-2">
             <Label htmlFor="cuisine">Cuisine</Label>
             <Select onValueChange={setCuisine}>
-              <SelectTrigger className="border-[#E8E2D9] focus-visible:ring-[#6B8068]">
-                <SelectValue placeholder="Select cuisine" />
+              <SelectTrigger className="border-[#E8E2D9] focus-visible:ring-[#507c49] cursor-pointer">
+                <SelectValue  placeholder="Select cuisine" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="italian">Italian</SelectItem>
-                <SelectItem value="mexican">Mexican</SelectItem>
-                <SelectItem value="indian">Indian</SelectItem>
-                <SelectItem value="japanese">Japanese</SelectItem>
-                <SelectItem value="american">American</SelectItem>
-                <SelectItem value="mediterranean">Mediterranean</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+              <SelectContent >
+                <SelectItem className="cursor-pointer" value="italian">Italian</SelectItem>
+                <SelectItem className="cursor-pointer" value="mexican">Mexican</SelectItem>
+                <SelectItem className="cursor-pointer" value="indian">Indian</SelectItem>
+                <SelectItem className="cursor-pointer" value="japanese">Japanese</SelectItem>
+                <SelectItem className="cursor-pointer" value="american">American</SelectItem>
+                <SelectItem className="cursor-pointer" value="mediterranean">Mediterranean</SelectItem>
+                <SelectItem className="cursor-pointer" value="other">Other</SelectItem>
               </SelectContent>
             </Select>
           </div>
