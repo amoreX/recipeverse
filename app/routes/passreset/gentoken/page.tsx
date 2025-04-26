@@ -56,7 +56,7 @@ export default function GenerateTokenPage() {
   };
   return (
     <div className="h-screen bg-[#FFFCF8] flex justify-center items-center">
-      <div className="container max-w-md p-8 bg-white rounded-2xl shadow-sm border border-[#E8E2D9]">
+      <div className="sm:container sm:max-w-md max-w-md p-8 bg-white rounded-2xl shadow-sm border border-[#E8E2D9]">
         <h1 className="text-center font-serif text-2xl font-semibold text-[#2D2A26] mb-6">
           Reset Password
         </h1>
