@@ -17,7 +17,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb+srv://nihal:nihal@recipeverse.utkcj01.mongodb.net/prod?retryWrites=true&w=majority&appName=recipeverse"
 }
 
 model User {
@@ -104,4 +104,12 @@ model PasswordResetToken {
 
   @@index([user_id])
   @@map("PasswordResetTokens")
+}
+
+model DeletionLog {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  deleted_id String
+  deleted_at DateTime @default(now())
+
+  @@map("DeletionLogs")
 }
