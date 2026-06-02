@@ -10,7 +10,7 @@ export const GET = async (req, res) => {
 
     return new Response(
       JSON.stringify({
-        allRecipes: recipe,
+        recipes: recipe,
         message: "Fetching All Recipe Succesfull!",
       }),
       {

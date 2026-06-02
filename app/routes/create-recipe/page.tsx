@@ -36,7 +36,7 @@ export default function CreateRecipePage() {
   const [recipeUrl, setRecipeUrl] = useState<string>("");
 
   useEffect(() => {
-    if (hasHydrated && !isAuthenticated) {
+    if (hasHydrated && isAuthenticated) {
       router.push("/routes/signin");
     }
   }, [router, hasHydrated, isAuthenticated]);

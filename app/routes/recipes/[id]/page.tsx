@@ -34,7 +34,7 @@ export default function RecipeDetailPage() {
         try {
           setIsLoading(true);
           const res = await axios.post("/api/getRecipe", {
-            recipeId: recipeId_url,
+            recipeId: recipeId_url?.toString().slice(0, -1),
           });
           selectRecipe(res.data.recipeDetails);
           setHasError(false);

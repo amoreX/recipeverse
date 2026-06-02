@@ -12,7 +12,7 @@ export const POST = async (req, res) => {
 
     return new Response(
       JSON.stringify({
-        numfav: fav ? fav.length : 0,
+        count: fav ? fav.length : 0,
         message: "Fetching Count Fav succesfull",
       }),
       {

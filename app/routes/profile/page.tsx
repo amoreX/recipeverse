@@ -40,7 +40,7 @@ export default function ProfilePage() {
       };
       getRecipes();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, recipes]);
 
   useEffect(() => {
     console.log("This is from zustand profile page:", recipes);

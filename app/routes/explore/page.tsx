@@ -49,13 +49,12 @@ export default function Explore() {
   }, [recipes]);
 
   useEffect(() => {
-    if (!recipes) return;
     setHeroImage(
       recipes.length > 0
         ? recipes[currentImageIndex]?.image_url || placeholder
         : placeholder
     );
-  }, [currentImageIndex]);
+  }, [currentImageIndex, recipes]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
