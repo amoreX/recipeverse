@@ -44,6 +44,10 @@ export default function CreateRecipePage() {
   if (!hasHydrated) return null;
 
   const handleSave = async () => {
+    if (!diff) {
+      toast("Please select a difficulty level", { style: { color: "red" } });
+      return;
+    }
     try {
       const payload = {
         userId: user?.id,
@@ -79,6 +83,10 @@ export default function CreateRecipePage() {
   };
 
   const handleDraft = async () => {
+    if (!diff) {
+      toast("Please select a difficulty level", { style: { color: "red" } });
+      return;
+    }
     try {
       const payload = {
         userId: user?.id,

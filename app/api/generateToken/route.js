@@ -1,10 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
-import nodemailer from "nodemailer";
-import dns from "dns";
-dns.setDefaultResultOrder("ipv4first");
 
-export const POST = async (req, res) => {
+export const POST = async (req) => {
   const { email } = await req.json();
   const token = crypto.randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60); // 1 hour from now
@@ -23,11 +20,11 @@ export const POST = async (req, res) => {
         },
       });
       if (res) {
-        const url = `https://recipev.vercel.app/routes/passreset/${token}`;
-        await sendResetEmail(email, url);
+        const url = `${process.env.NEXT_PUBLIC_APP_URL}/routes/passreset/${token}`;
+        console.log("[DEV] Password reset link:", url);
         return new Response(
           JSON.stringify({
-            message: "Mail Sent",
+            message: "Reset link generated (check server console for URL)",
           }),
           {
             status: 200,
@@ -37,7 +34,7 @@ export const POST = async (req, res) => {
       } else {
         return new Response(
           JSON.stringify({
-            message: "Mail Not Sent!",
+            message: "Failed to generate reset token",
           }),
           {
             status: 500,
@@ -53,30 +50,9 @@ export const POST = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return new Response(JSON.stringify({ message: "User Doesn't Failed" }), {
+    return new Response(JSON.stringify({ message: "Request failed" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
   }
 };
-
-async function sendResetEmail(toEmail, url) {
-  const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
-
-  const mailOptions = {
-    from: '"Recipe App" <no-reply@recipe.com>',
-    to: toEmail,
-    subject: "Password Reset Request",
-    html: `<p>You requested a password reset. Click the link below to reset your password:</p>
-             <p><a href="${url}">${url}</a></p>
-             <p>This link will expire in 1 hour.</p>`,
-  };
-
-  await transporter.sendMail(mailOptions);
-}

@@ -17,7 +17,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = "mongodb+srv://nihal:nihal@recipeverse.utkcj01.mongodb.net/prod?retryWrites=true&w=majority&appName=recipeverse"
+  url      = env("DATABASE_URL")
 }
 
 model User {
